@@ -164,6 +164,8 @@ public class Player : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, points[0].transform.position, dashCount);
             if(transform.position == points[0].transform.position)
             {
+                dashCount = 0;
+                insCount = 1;
                 isDash = false;
                 Destroy(points[0]);
                 isMove = true;
