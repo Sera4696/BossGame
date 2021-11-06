@@ -622,7 +622,15 @@ MonoBehaviour:
   axis: {x: 0, y: 0, z: 0}
   _period: 3
   isMove: 0
+  isMoveUpDown: 0
   moveCount: 0
+  insCount: 0
+  dashCount: 0
+  insPoint: {fileID: 7970242087210151507, guid: c4a6c3d0cbda57b41aa891f02035500c,
+    type: 3}
+  isDash: 0
+  points:
+  - {fileID: 0}
 --- !u!135 &1674525086
 SphereCollider:
   m_ObjectHideFlags: 0

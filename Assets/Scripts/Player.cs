@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector3 center;
     [SerializeField] private Vector3 centerUp;
     [SerializeField] private Vector3 centerDown;
+    
 
     // 回転軸
     [SerializeField] private Vector3 axis;
@@ -22,9 +23,21 @@ public class Player : MonoBehaviour
     [SerializeField] private float _period;
 
     [SerializeField] private bool isMove;
+    [SerializeField] private bool isMoveUpDown;
     [SerializeField] private float moveCount;
 
-   
+    [SerializeField] private int insCount;
+
+    [SerializeField] private float dashCount;
+
+    [SerializeField] public GameObject insPoint;
+
+    [SerializeField] private bool isDash;
+
+    [SerializeField] private GameObject[] points;
+
+    //[SerializeField] private GameObject[] points;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +50,12 @@ public class Player : MonoBehaviour
         centerDown = new Vector3(0, -10, 0);
         axis = new Vector3(0, 1, 0);
 
-        isMove = false;
+        isMoveUpDown = false;
+
+        insCount = 1;
+        isMove = true;
+        isDash = false;
+
         //defPosition = new Vector3(0,5,0);    //defPositionを自分のいる位置に設定する。
     }
 
@@ -47,6 +65,7 @@ public class Player : MonoBehaviour
 
         Move();
         MoveUpDown();
+        Dash();
         //x = radius * Mathf.Sin(aroundTime * speed);      //X軸の設定
         //z = radius * Mathf.Cos(aroundTime * speed);      //Z軸の設定
 
@@ -55,34 +74,39 @@ public class Player : MonoBehaviour
 
     public void Move()
     {
-        if (Input.GetKey(KeyCode.A))
+        if(isMove)
         {
-            aroundTime = 0.01f;
-        }
+            if (Input.GetKey(KeyCode.A))
+            {
+                aroundTime = 0.01f;
+            }
 
-        else if (Input.GetKey(KeyCode.D))
-        {
-            aroundTime = -0.01f;
-        }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                aroundTime = -0.01f;
+            }
 
-        else
-        {
-            aroundTime = 0;
-        }
+            else
+            {
+                aroundTime = 0;
+            }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            isMove = true;            
-        }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                isMoveUpDown = true;
+                Ins();
+            }
 
-        transform.RotateAround(center, axis, 360 / _period * aroundTime);
+            transform.RotateAround(center, axis, 360 / _period * aroundTime);
+        }
+        
     }
 
     public void MoveUpDown()
     {
         if (center.y == 5)
         {
-            if (isMove == true)
+            if (isMoveUpDown == true)
             {
                 moveCount += 0.001f;
                 transform.position = Vector3.Lerp(transform.position, transform.position + centerDown, moveCount);
@@ -92,7 +116,7 @@ public class Player : MonoBehaviour
                     transform.position = new Vector3(transform.position.x, -5, transform.position.z);
                     center = new Vector3(0, -5, 0);
 
-                    isMove = false;
+                    isMoveUpDown = false;
                     moveCount = 0;
                 }
             }
@@ -100,7 +124,7 @@ public class Player : MonoBehaviour
 
         if (center.y == -5)
         {
-            if (isMove == true)
+            if (isMoveUpDown == true)
             {
                 moveCount += 0.001f;
                 transform.position = Vector3.Lerp(transform.position, transform.position + centerUp, moveCount);
@@ -109,9 +133,40 @@ public class Player : MonoBehaviour
                 {
                     transform.position = new Vector3(transform.position.x, 5, transform.position.z);
                     center = new Vector3(0, 5, 0);
-                    isMove = false;
+                    isMoveUpDown = false;
                     moveCount = 0;
                 }
+            }
+        }
+    }
+
+    void Ins()
+    {
+        if(insCount > 0)
+        {
+            points[0] = Instantiate(insPoint, transform.position, Quaternion.identity);
+           
+            insCount--;
+        }
+    }
+
+    void Dash()
+    {
+        if(Input.GetKeyDown(KeyCode.B) && points[0] != null)
+        {
+            isDash = true;
+            isMove = false;
+        }
+
+        if(isDash)
+        {
+            dashCount += 0.001f;
+            transform.position = Vector3.Lerp(transform.position, points[0].transform.position, dashCount);
+            if(transform.position == points[0].transform.position)
+            {
+                isDash = false;
+                Destroy(points[0]);
+                isMove = true;
             }
         }
     }
