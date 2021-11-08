@@ -27,8 +27,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float moveCount;
 
     [SerializeField] private int insCount;
+    [SerializeField] private int pointCount;
 
-    [SerializeField] private float dashCount;
+    [SerializeField] private float dashSpeedCount;
 
     [SerializeField] public GameObject insPoint;
 
@@ -52,7 +53,8 @@ public class Player : MonoBehaviour
 
         isMoveUpDown = false;
 
-        insCount = 1;
+        insCount = 3;
+        pointCount = 0;
         isMove = true;
         isDash = false;
 
@@ -99,7 +101,7 @@ public class Player : MonoBehaviour
 
             transform.RotateAround(center, axis, 360 / _period * aroundTime);
         }
-        
+        //transform.RotateAround(center, axis, 360 / _period * aroundTime);
     }
 
     public void MoveUpDown()
@@ -144,9 +146,11 @@ public class Player : MonoBehaviour
     {
         if(insCount > 0)
         {
-            points[0] = Instantiate(insPoint, transform.position, Quaternion.identity);
-           
+            points[pointCount] = Instantiate(insPoint, transform.position, Quaternion.identity);           
             insCount--;
+            pointCount++;
+            if (pointCount > 3)
+                pointCount = 3;
         }
     }
 
@@ -160,12 +164,31 @@ public class Player : MonoBehaviour
 
         if(isDash)
         {
-            dashCount += 0.001f;
-            transform.position = Vector3.Lerp(transform.position, points[0].transform.position, dashCount);
-            if(transform.position == points[0].transform.position)
+            dashSpeedCount += 0.005f;
+            
+
+            if(transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
             {
-                dashCount = 0;
-                insCount = 1;
+                Destroy(points[pointCount - 1]);
+                pointCount--;
+            }
+
+            transform.position = Vector3.Lerp(transform.position, points[pointCount - 1].transform.position, dashSpeedCount);
+
+            if (transform.position == points[0].transform.position)
+            {
+                if(transform.position.y == 5)
+                {
+                    center.y = 5;
+                }
+
+                else if(transform.position.y == -5)
+                {
+                    center.y = -5;
+                }
+                pointCount = 0;
+                dashSpeedCount = 0;
+                insCount = 3;
                 isDash = false;
                 Destroy(points[0]);
                 isMove = true;
