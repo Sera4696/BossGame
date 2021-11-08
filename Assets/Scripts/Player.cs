@@ -37,6 +37,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private GameObject[] points;
 
+    [SerializeField] private LineRenderer lineRenderer;
+
     //[SerializeField] private GameObject[] points;
 
     // Start is called before the first frame update
@@ -67,6 +69,7 @@ public class Player : MonoBehaviour
         Move();
         MoveUpDown();
         Dash();
+        Line();
         //x = radius * Mathf.Sin(aroundTime * speed);      //X軸の設定
         //z = radius * Mathf.Cos(aroundTime * speed);      //Z軸の設定
 
@@ -165,7 +168,6 @@ public class Player : MonoBehaviour
         {
             dashSpeedCount += 0.003f;
             
-
             if(transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
             {
                 Destroy(points[pointCount - 1]);
@@ -192,6 +194,51 @@ public class Player : MonoBehaviour
                 Destroy(points[0]);
                 isMove = true;
             }
+        }
+    }
+
+    void Line()
+    {
+        if (points[0] == null && points[1] == null && points[2] == null)
+        {
+            lineRenderer.enabled = false;
+        }
+
+        if (points[0] != null && points[1] == null && points[2] == null)
+        {
+            lineRenderer.enabled = true;
+            var positions = new Vector3[]{
+            points[0].transform.position,
+            transform.position};
+
+            lineRenderer.positionCount = positions.Length;
+
+            lineRenderer.SetPositions(positions);
+        }
+
+        if (points[0] != null && points[1] != null && points[2] == null)
+        {
+            var positions = new Vector3[]{
+            points[0].transform.position,
+            points[1].transform.position,
+            transform.position};
+
+            lineRenderer.positionCount = positions.Length;
+
+            lineRenderer.SetPositions(positions);
+        }
+
+        if (points[0] != null && points[1] != null && points[2] != null)
+        {
+            var positions = new Vector3[]{
+            points[0].transform.position,
+            points[1].transform.position,
+            points[2].transform.position,
+            transform.position};
+
+            lineRenderer.positionCount = positions.Length;
+
+            lineRenderer.SetPositions(positions);
         }
     }
 }
