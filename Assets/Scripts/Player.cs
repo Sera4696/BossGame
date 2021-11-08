@@ -42,13 +42,12 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = 1.5f;
-        radius = 10;
+        speed = 0.8f;       
         aroundTime = 0;
 
-        center = new Vector3(0, 5, 0);
-        centerUp = new Vector3(0, 10, 0);
-        centerDown = new Vector3(0, -10, 0);
+        center = new Vector3(0, 10, 0);
+        centerUp = new Vector3(0, 20, 0);
+        centerDown = new Vector3(0, -20, 0);
         axis = new Vector3(0, 1, 0);
 
         isMoveUpDown = false;
@@ -106,17 +105,17 @@ public class Player : MonoBehaviour
 
     public void MoveUpDown()
     {
-        if (center.y == 5)
+        if (center.y == 10)
         {
             if (isMoveUpDown == true)
             {
                 moveCount += 0.001f;
                 transform.position = Vector3.Lerp(transform.position, transform.position + centerDown, moveCount);
 
-                if (transform.position.y <= -5)
+                if (transform.position.y <= -10)
                 {
-                    transform.position = new Vector3(transform.position.x, -5, transform.position.z);
-                    center = new Vector3(0, -5, 0);
+                    transform.position = new Vector3(transform.position.x, -10, transform.position.z);
+                    center = new Vector3(0, -10, 0);
 
                     isMoveUpDown = false;
                     moveCount = 0;
@@ -124,17 +123,17 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (center.y == -5)
+        if (center.y == -10)
         {
             if (isMoveUpDown == true)
             {
                 moveCount += 0.001f;
                 transform.position = Vector3.Lerp(transform.position, transform.position + centerUp, moveCount);
 
-                if (transform.position.y >= 5)
+                if (transform.position.y >= 10)
                 {
-                    transform.position = new Vector3(transform.position.x, 5, transform.position.z);
-                    center = new Vector3(0, 5, 0);
+                    transform.position = new Vector3(transform.position.x, 10, transform.position.z);
+                    center = new Vector3(0, 10, 0);
                     isMoveUpDown = false;
                     moveCount = 0;
                 }
@@ -164,7 +163,7 @@ public class Player : MonoBehaviour
 
         if(isDash)
         {
-            dashSpeedCount += 0.005f;
+            dashSpeedCount += 0.003f;
             
 
             if(transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
@@ -177,14 +176,14 @@ public class Player : MonoBehaviour
 
             if (transform.position == points[0].transform.position)
             {
-                if(transform.position.y == 5)
+                if(transform.position.y == 10)
                 {
-                    center.y = 5;
+                    center.y = 10;
                 }
 
-                else if(transform.position.y == -5)
+                else if(transform.position.y == -10)
                 {
-                    center.y = -5;
+                    center.y = -10;
                 }
                 pointCount = 0;
                 dashSpeedCount = 0;
