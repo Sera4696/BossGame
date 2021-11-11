@@ -4,19 +4,35 @@ using UnityEngine;
 
 public class PlayOfTheStick : MonoBehaviour
 {
+    [SerializeField] private SphereCollider sCol;
+    private float speed=60;
     private bool isGo = false,isStick=true;
 
-    [SerializeField] private SphereCollider sCol;
+    [SerializeField] private LineRenderer lineRenderer;
+    private List<Vector3> LinePoints = new List<Vector3>();
+
+    [SerializeField]private GameObject[] Points;
+    [SerializeField] private GameObject insPoint;
+    private int pointCount = 0;
+    private Vector3[] positions;
+
     // Start is called before the first frame update
     void Start()
     {
         sCol = GetComponent<SphereCollider>();
+        lineRenderer.enabled = true;
+        
     }
 
     // Update is called once per frame
-    void Update()
+
+    private void FixedUpdate()
     {
         PlayerMove();
+    }
+    void Update()
+    {
+        
     }
 
     public void PlayerMove()
@@ -41,23 +57,62 @@ public class PlayOfTheStick : MonoBehaviour
             {
                 var direction = new Vector3(h2, 0, v2);
                 transform.localRotation = Quaternion.LookRotation(direction);
+               
                 isGo = true;
                 isStick = false;
+
+                //ポイントを増やす場所
+                /*Points[pointCount] = Instantiate(insPoint, transform.position, Quaternion.identity);
+                pointCount++;*/
+
             }
         }
+
         if (isGo == true)
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * 5f);
+            transform.Translate(Vector3.forward * Time.deltaTime * speed);
         }
+
+        //ポイントを登録する場所
+        /*var positions = new Vector3[]
+             {
+                 
+        transform.position,
+             };
+        for (int i = 0; i <= Points.Length; i++)
+        {
+
+
+            Points[i].transform.position;
+
+        }
+
+        lineRenderer.positionCount = positions.Length;
+            lineRenderer.SetPositions(positions);*/
+
+    
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        sCol.enabled = false;
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    Debug.Log(other.gameObject.name);
+    //    if (other.gameObject.tag == "Ring")
+    //    {
+    //        isGo = false;
+    //        isStick = true;
+    //        Debug.Log("あたった");
+    //    }
+    //}
 
     private void OnTriggerExit(Collider other)
     {
-        sCol.enabled = true;
+        if (other.gameObject.tag == "Ring")
+        {
+            
+
+            isGo = false;
+            isStick = true;
+        }
     }
+
 }
