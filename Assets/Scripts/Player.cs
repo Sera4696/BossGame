@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     
     //その他
     [SerializeField] public GameObject targetObject;
+    [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private int reverse;
 
     //[SerializeField] private float speed;                //オブジェクトのスピード
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour
 
     //[SerializeField] private GameObject[] points;
 
-    //[SerializeField] private LineRenderer lineRenderer;
+    
 
 
     //[SerializeField] private GameObject[] points;
@@ -76,7 +77,7 @@ public class Player : MonoBehaviour
         //pointCount = 0;
         
         //プレイヤーの回転移動
-        speed = 3;
+        speed = 1;
         radius = 30;
         aroundTime = 0;
         defPosition = new Vector3(0, 10, 0);    //defPositionを自分のいる位置に設定する。
@@ -84,23 +85,22 @@ public class Player : MonoBehaviour
         //プレイヤーのダッシュ
         isMove = true;
         isDash = false;
-        dashSpeed = 0.03f;
+        dashSpeed = 0.01f;
 
         //その他
         reverse = -1;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //Look();
+        transform.LookAt(targetObject.transform);
         Move();
         MoveUpDown();
         Dash();
-        Line();
-        Look();
-
-        //transform.LookAt(targetObject.transform);
+        Line();      
     }
 
     public void Move()
@@ -124,21 +124,6 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(x + defPosition.x, defPosition.y, z + defPosition.z);  //自分のいる位置から座標を動かす。
         }
 
-        //    else
-        //    {
-        //        aroundTime = 0;
-        //    }
-
-        //    if (Input.GetKeyDown(KeyCode.Space))
-        //    {
-        //        isMoveUpDown = true;
-        //        Ins();
-        //    }
-
-        //    transform.RotateAround(center, axis, 360 / _period * aroundTime);
-        //    //
-        //}
-        //transform.RotateAround(center, axis, 360 / _period * aroundTime);
     }
 
     
@@ -157,7 +142,7 @@ public class Player : MonoBehaviour
 
     void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.B))// && points[0] != null)
+        if (Input.GetKeyDown(KeyCode.B) && isDash == false)// && points[0] != null)
         {
             dashNowPosition = dashPosition.position;
             isDash = true;
@@ -173,6 +158,8 @@ public class Player : MonoBehaviour
             {
                 reverse *= -1;
                 defPosition.y *= -1;
+
+                dashSpeed -= 0.001f; 
 
                 isDash = false;
                 isMove = true;
@@ -216,47 +203,65 @@ public class Player : MonoBehaviour
 
     void Line()
     {
-    //    if (points[0] == null && points[1] == null && points[2] == null)
-    //    {
-    //        lineRenderer.enabled = false;
-    //    }
+        if(isMove)
+        {
+            var positions = new Vector3[] { dashPosition.position, transform.position };
 
-    //    if (points[0] != null && points[1] == null && points[2] == null)
-    //    {
-    //        lineRenderer.enabled = true;
-    //        var positions = new Vector3[]{
-    //        points[0].transform.position,
-    //        transform.position};
+            lineRenderer.positionCount = positions.Length;
 
-    //        lineRenderer.positionCount = positions.Length;
+            lineRenderer.SetPositions(positions);
+        }
 
-    //        lineRenderer.SetPositions(positions);
-    //    }
+        if(isDash)
+        {
+            var positions = new Vector3[] { dashNowPosition, transform.position };
 
-    //    if (points[0] != null && points[1] != null && points[2] == null)
-    //    {
-    //        var positions = new Vector3[]{
-    //        points[0].transform.position,
-    //        points[1].transform.position,
-    //        transform.position};
+            lineRenderer.positionCount = positions.Length;
 
-    //        lineRenderer.positionCount = positions.Length;
+            lineRenderer.SetPositions(positions);
+        }
+        
+        //    if (points[0] == null && points[1] == null && points[2] == null)
+        //    {
+        //        lineRenderer.enabled = false;
+        //    }
 
-    //        lineRenderer.SetPositions(positions);
-    //    }
+        //    if (points[0] != null && points[1] == null && points[2] == null)
+        //    {
+        //        lineRenderer.enabled = true;
+        //        var positions = new Vector3[]{
+        //        points[0].transform.position,
+        //        transform.position};
 
-    //    if (points[0] != null && points[1] != null && points[2] != null)
-    //    {
-    //        var positions = new Vector3[]{
-    //        points[0].transform.position,
-    //        points[1].transform.position,
-    //        points[2].transform.position,
-    //        transform.position};
+        //        lineRenderer.positionCount = positions.Length;
 
-    //        lineRenderer.positionCount = positions.Length;
+        //        lineRenderer.SetPositions(positions);
+        //    }
 
-    //        lineRenderer.SetPositions(positions);
-    //    }
+        //    if (points[0] != null && points[1] != null && points[2] == null)
+        //    {
+        //        var positions = new Vector3[]{
+        //        points[0].transform.position,
+        //        points[1].transform.position,
+        //        transform.position};
+
+        //        lineRenderer.positionCount = positions.Length;
+
+        //        lineRenderer.SetPositions(positions);
+        //    }
+
+        //    if (points[0] != null && points[1] != null && points[2] != null)
+        //    {
+        //        var positions = new Vector3[]{
+        //        points[0].transform.position,
+        //        points[1].transform.position,
+        //        points[2].transform.position,
+        //        transform.position};
+
+        //        lineRenderer.positionCount = positions.Length;
+
+        //        lineRenderer.SetPositions(positions);
+        //    }
     }
 
     void Look()
