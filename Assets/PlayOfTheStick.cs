@@ -62,8 +62,8 @@ public class PlayOfTheStick : MonoBehaviour
                 isStick = false;
 
                 //ポイントを増やす場所
-                /*Points[pointCount] = Instantiate(insPoint, transform.position, Quaternion.identity);
-                pointCount++;*/
+                Points[pointCount] = Instantiate(insPoint, transform.position, Quaternion.identity);
+                pointCount++;
 
             }
         }
@@ -74,23 +74,21 @@ public class PlayOfTheStick : MonoBehaviour
         }
 
         //ポイントを登録する場所
-        /*var positions = new Vector3[]
-             {
-                 
-        transform.position,
-             };
-        for (int i = 0; i <= Points.Length; i++)
-        {
+        //for (int i = 0; i <= Points.Length; i++)
+        //{
+        //    var positions = new Vector3[]
+        //    {
+        //         Points[i].transform.position,
+        //         transform.position,
+        //    };
 
+        //    Debug.Log("登録されとるで");
+        //   }
+        
+        //lineRenderer.positionCount = positions.Length;
+        //lineRenderer.SetPositions(positions);
+        //Debug.Log(positions.Length);
 
-            Points[i].transform.position;
-
-        }
-
-        lineRenderer.positionCount = positions.Length;
-            lineRenderer.SetPositions(positions);*/
-
-    
     }
 
     //private void OnTriggerEnter(Collider other)
