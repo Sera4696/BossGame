@@ -78,14 +78,14 @@ public class Player : MonoBehaviour
         
         //プレイヤーの回転移動
         speed = 1;
-        radius = 30;
+        radius = 35;
         aroundTime = 0;
-        defPosition = new Vector3(0, 10, 0);    //defPositionを自分のいる位置に設定する。
+        defPosition = new Vector3(0, 15, 0);    //defPositionを自分のいる位置に設定する。
 
         //プレイヤーのダッシュ
         isMove = true;
         isDash = false;
-        dashSpeed = 0.01f;
+        dashSpeed = 0.02f;
 
         //その他
         reverse = -1;
@@ -98,7 +98,6 @@ public class Player : MonoBehaviour
         //Look();
         transform.LookAt(targetObject.transform);
         Move();
-        MoveUpDown();
         Dash();
         Line();      
     }
@@ -151,7 +150,7 @@ public class Player : MonoBehaviour
 
         if (isDash == true)
         {
-            dashSpeedCount += dashSpeed;
+            dashSpeedCount += dashSpeed / 10;
             transform.position = Vector3.Lerp(transform.position, dashNowPosition, dashSpeedCount);
 
             if(transform.position == dashNowPosition)
@@ -159,7 +158,8 @@ public class Player : MonoBehaviour
                 reverse *= -1;
                 defPosition.y *= -1;
 
-                dashSpeed -= 0.001f; 
+                dashSpeed -= 0.002f;
+                //transform.localScale *= 2;
 
                 isDash = false;
                 isMove = true;
@@ -271,41 +271,5 @@ public class Player : MonoBehaviour
         transform.localRotation = look;
     }
 
-    public void MoveUpDown()
-    {
-        //if (center.y == 10)
-        //{
-        //    if (isMoveUpDown == true)
-        //    {
-        //        moveCount += 0.001f;
-        //        transform.position = Vector3.Lerp(transform.position, transform.position + centerDown, moveCount);
-
-        //        if (transform.position.y <= -10)
-        //        {
-        //            transform.position = new Vector3(transform.position.x, -10, transform.position.z);
-        //            center = new Vector3(0, -10, 0);
-
-        //            isMoveUpDown = false;
-        //            moveCount = 0;
-        //        }
-        //    }
-        //}
-
-        //if (center.y == -10)
-        //{
-        //    if (isMoveUpDown == true)
-        //    {
-        //        moveCount += 0.001f;
-        //        transform.position = Vector3.Lerp(transform.position, transform.position + centerUp, moveCount);
-
-        //        if (transform.position.y >= 10)
-        //        {
-        //            transform.position = new Vector3(transform.position.x, 10, transform.position.z);
-        //            center = new Vector3(0, 10, 0);
-        //            isMoveUpDown = false;
-        //            moveCount = 0;
-        //        }
-        //    }
-        //}
-    }
+    
 }
