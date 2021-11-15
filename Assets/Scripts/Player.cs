@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool isMove;
 
     //プレイヤーのダッシュ
-　　[SerializeField] private bool isDash;
+    [SerializeField] private bool isDash;
     [SerializeField] private Transform dashPosition;
     [SerializeField] private Vector3 dashNowPosition;
     [SerializeField] private float dashSpeedCount;
@@ -36,6 +36,10 @@ public class Player : MonoBehaviour
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private int reverse;
 
+    //カメラ演出
+    [SerializeField] private GameObject mainCamera;
+    [SerializeField] private GameObject subCamera;
+    
     //[SerializeField] private float speed;                //オブジェクトのスピード
     //[SerializeField] private int radius;               //円を描く半径
     //private Vector3 defPosition;      //defPositionをVector3で定義する。
@@ -95,6 +99,12 @@ public class Player : MonoBehaviour
 
 
         pointCount = 0;
+
+        //カメラ
+        mainCamera = GameObject.Find("Main Camera");
+        subCamera = GameObject.Find("Sub Camera");
+        subCamera.SetActive(false);
+        mainCamera.SetActive(true);
     }
 
     // Update is called once per frame
@@ -215,8 +225,10 @@ public class Player : MonoBehaviour
             isMove = false;
         }
 
-        if(isBoostDash)
+        if(isBoostDash==true)
         {
+            mainCamera.SetActive(false);
+            subCamera.SetActive(true);
             boostdashSpeed += 0.01f;
             transform.position = Vector3.Lerp(transform.position, points[pointCount - 1].transform.position, boostdashSpeed);
 
@@ -235,7 +247,13 @@ public class Player : MonoBehaviour
                 Destroy(points[0]);
                 isMove = true;
             }
-        }       
+        }
+
+        if (isBoostDash == false)
+        {
+            mainCamera.SetActive(true);
+            subCamera.SetActive(false);
+        }
     }
 
 
