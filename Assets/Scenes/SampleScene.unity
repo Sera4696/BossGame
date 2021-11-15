@@ -671,6 +671,22 @@ MonoBehaviour:
   dashNowPosition: {x: 0, y: 0, z: 0}
   dashSpeedCount: 0
   dashSpeed: 0
+  isBoostDash: 0
+  boostdashSpeed: 0
+  points:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  pointCount: 0
+  insPoint: {fileID: 7970242087210151507, guid: c4a6c3d0cbda57b41aa891f02035500c,
+    type: 3}
   targetObject: {fileID: 1968058486}
   lineRenderer: {fileID: 1674525090}
   reverse: 0

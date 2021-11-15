@@ -19,7 +19,18 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector3 dashNowPosition;
     [SerializeField] private float dashSpeedCount;
     [SerializeField] private float dashSpeed;
-    
+
+    //プレーヤーのブーストダッシュ
+    [SerializeField] private bool isBoostDash;
+    [SerializeField] private float boostdashSpeed;
+
+    //ポイント系
+    [SerializeField] private GameObject[] points;
+    [SerializeField] private int pointCount;
+    [SerializeField] public GameObject insPoint;
+
+
+
     //その他
     [SerializeField] public GameObject targetObject;
     [SerializeField] private LineRenderer lineRenderer;
@@ -47,17 +58,7 @@ public class Player : MonoBehaviour
     //[SerializeField] private float moveCount;
 
     //[SerializeField] private int insCount;
-    //[SerializeField] private int pointCount;
 
-
-
-    //[SerializeField] public GameObject insPoint;
-
-
-
-    //[SerializeField] private GameObject[] points;
-
-    
 
 
     //[SerializeField] private GameObject[] points;
@@ -74,7 +75,7 @@ public class Player : MonoBehaviour
         //isMoveUpDown = false;
 
         //insCount = 3;
-        //pointCount = 0;
+        
         
         //プレイヤーの回転移動
         speed = 1;
@@ -87,18 +88,23 @@ public class Player : MonoBehaviour
         isDash = false;
         dashSpeed = 0.02f;
 
+        isBoostDash = false;
+
         //その他
         reverse = -1;
 
+
+        pointCount = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Look();
-        transform.LookAt(targetObject.transform);
+        //Ins();
+        Look();
         Move();
         Dash();
+        BoostDash();
         Line();      
     }
 
@@ -125,10 +131,13 @@ public class Player : MonoBehaviour
 
     }
 
-    
-
     void Ins()
     {
+        if (pointCount < 8)
+        {
+            points[pointCount] = Instantiate(insPoint, transform.position, Quaternion.identity);
+            pointCount++;
+        }
         //if(insCount > 0)
         //{
         //    points[pointCount] = Instantiate(insPoint, transform.position, Quaternion.identity);           
@@ -141,8 +150,9 @@ public class Player : MonoBehaviour
 
     void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.B) && isDash == false)// && points[0] != null)
+        if (Input.GetKeyDown(KeyCode.Space) && !isDash && !isBoostDash)// && points[0] != null)
         {
+            Ins();
             dashNowPosition = dashPosition.position;
             isDash = true;
             isMove = false;
@@ -159,6 +169,10 @@ public class Player : MonoBehaviour
                 defPosition.y *= -1;
 
                 dashSpeed -= 0.002f;
+                if(dashSpeed < 0.001f)
+                {
+                    dashSpeed = 0.001f;
+                }
                 //transform.localScale *= 2;
 
                 isDash = false;
@@ -179,97 +193,259 @@ public class Player : MonoBehaviour
 
         //    
 
-        //    if (transform.position == points[0].transform.position)
-        //    {
-        //        if(transform.position.y >= 9.5f)
-        //        {                    
-        //            center.y = 10;
-        //        }
-
-        //        else if(transform.position.y == -10)
-        //        {
-        //            center.y = -10;
-        //        }
-        //        pointCount = 0;
-        //        dashSpeedCount = 0;
-        //        insCount = 3;
-        //        isDash = false;
-        //        Destroy(points[0]);
-        //        //反対にうつる処理
-        //        isMove = true;
-        //    }
+        //    
         //}
+    }
+
+    void BoostDash()
+    {
+        if(Input.GetKeyDown(KeyCode.B) && !isBoostDash && !isDash && points[0] != null)
+        {
+            isBoostDash = true;
+            isMove = false;
+        }
+
+        if(isBoostDash)
+        {
+            boostdashSpeed += 0.01f;
+            transform.position = Vector3.Lerp(transform.position, points[pointCount - 1].transform.position, boostdashSpeed);
+
+            if (transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
+            {
+                Destroy(points[pointCount - 1]);
+                pointCount--;
+            }
+
+            if (transform.position == points[0].transform.position)
+            {
+                pointCount = 0;
+                dashSpeed = 0.02f;
+                boostdashSpeed = 0;
+                isBoostDash = false;
+                Destroy(points[0]);
+                isMove = true;
+            }
+        }       
+    }
+
+
+    void Look()
+    {
+        transform.LookAt(targetObject.transform);
+        //var aim = targetObject.transform.position - transform.position;
+        //var look = Quaternion.LookRotation(aim);
+        //transform.localRotation = look;
     }
 
     void Line()
     {
-        if(isMove)
+        //if(isMove)
+        //{
+        //    var positions = new Vector3[] { dashPosition.position, transform.position };
+
+        //    lineRenderer.positionCount = positions.Length;
+
+        //    lineRenderer.SetPositions(positions);
+        //}
+
+        //if(isDash)
+        //{
+        //    var positions = new Vector3[] { dashNowPosition, transform.position };
+
+        //    lineRenderer.positionCount = positions.Length;
+
+        //    lineRenderer.SetPositions(positions);
+        //}
+
+        if (points[0] == null && points[1] == null && points[2] == null &&
+            points[3] == null && points[4] == null && points[5] == null &&
+            points[6] == null && points[7] == null && points[8] == null)
         {
-            var positions = new Vector3[] { dashPosition.position, transform.position };
+            lineRenderer.enabled = false;
+        }
+
+        if (points[0] != null && points[1] == null && points[2] == null &&
+            points[3] == null && points[4] == null && points[5] == null &&
+            points[6] == null && points[7] == null && points[8] == null)
+        {
+            lineRenderer.enabled = true;
+            var positions = new Vector3[]
+            {
+                points[0].transform.position,
+                transform.position
+            };
 
             lineRenderer.positionCount = positions.Length;
 
             lineRenderer.SetPositions(positions);
         }
 
-        if(isDash)
+        if (points[0] != null && points[1] != null && points[2] == null &&
+            points[3] == null && points[4] == null && points[5] == null &&
+            points[6] == null && points[7] == null && points[8] == null)
         {
-            var positions = new Vector3[] { dashNowPosition, transform.position };
+            lineRenderer.enabled = true;
+            var positions = new Vector3[]
+            {
+                points[0].transform.position,
+                points[1].transform.position,
+                transform.position
+            };
 
             lineRenderer.positionCount = positions.Length;
 
             lineRenderer.SetPositions(positions);
         }
-        
-        //    if (points[0] == null && points[1] == null && points[2] == null)
-        //    {
-        //        lineRenderer.enabled = false;
-        //    }
 
-        //    if (points[0] != null && points[1] == null && points[2] == null)
-        //    {
-        //        lineRenderer.enabled = true;
-        //        var positions = new Vector3[]{
-        //        points[0].transform.position,
-        //        transform.position};
+        if (points[0] != null && points[1] != null && points[2] != null &&
+            points[3] == null && points[4] == null && points[5] == null &&
+            points[6] == null && points[7] == null && points[8] == null)
+        {
+            lineRenderer.enabled = true;
+            var positions = new Vector3[]
+            {
+                points[0].transform.position,
+                points[1].transform.position,
+                points[2].transform.position,
+                transform.position
+            };
 
-        //        lineRenderer.positionCount = positions.Length;
+            lineRenderer.positionCount = positions.Length;
 
-        //        lineRenderer.SetPositions(positions);
-        //    }
+            lineRenderer.SetPositions(positions);
+        }
 
-        //    if (points[0] != null && points[1] != null && points[2] == null)
-        //    {
-        //        var positions = new Vector3[]{
-        //        points[0].transform.position,
-        //        points[1].transform.position,
-        //        transform.position};
+        if (points[0] != null && points[1] != null && points[2] != null &&
+            points[3] != null && points[4] == null && points[5] == null &&
+            points[6] == null && points[7] == null && points[8] == null)
+        {
+            lineRenderer.enabled = true;
+            var positions = new Vector3[]
+            {
+                points[0].transform.position,
+                points[1].transform.position,
+                points[2].transform.position,
+                points[3].transform.position,
+                transform.position
+            };
 
-        //        lineRenderer.positionCount = positions.Length;
+            lineRenderer.positionCount = positions.Length;
 
-        //        lineRenderer.SetPositions(positions);
-        //    }
+            lineRenderer.SetPositions(positions);
+        }
 
-        //    if (points[0] != null && points[1] != null && points[2] != null)
-        //    {
-        //        var positions = new Vector3[]{
-        //        points[0].transform.position,
-        //        points[1].transform.position,
-        //        points[2].transform.position,
-        //        transform.position};
+        if (points[0] != null && points[1] != null && points[2] != null &&
+            points[3] != null && points[4] != null && points[5] == null &&
+            points[6] == null && points[7] == null && points[8] == null)
+        {
+            lineRenderer.enabled = true;
+            var positions = new Vector3[]
+            {
+                points[0].transform.position,
+                points[1].transform.position,
+                points[2].transform.position,
+                points[3].transform.position,
+                points[4].transform.position,
+                transform.position
+            };
 
-        //        lineRenderer.positionCount = positions.Length;
+            lineRenderer.positionCount = positions.Length;
 
-        //        lineRenderer.SetPositions(positions);
-        //    }
+            lineRenderer.SetPositions(positions);
+        }
+
+        if (points[0] != null && points[1] != null && points[2] != null &&
+            points[3] != null && points[4] != null && points[5] != null &&
+            points[6] == null && points[7] == null && points[8] == null)
+        {
+            lineRenderer.enabled = true;
+            var positions = new Vector3[]
+            {
+                points[0].transform.position,
+                points[1].transform.position,
+                points[2].transform.position,
+                points[3].transform.position,
+                points[4].transform.position,
+                points[5].transform.position,
+                transform.position
+            };
+
+            lineRenderer.positionCount = positions.Length;
+
+            lineRenderer.SetPositions(positions);
+        }
+
+        if (points[0] != null && points[1] != null && points[2] != null &&
+            points[3] != null && points[4] != null && points[5] != null &&
+            points[6] != null && points[7] == null && points[8] == null)
+        {
+            lineRenderer.enabled = true;
+            var positions = new Vector3[]
+            {
+                points[0].transform.position,
+                points[1].transform.position,
+                points[2].transform.position,
+                points[3].transform.position,
+                points[4].transform.position,
+                points[5].transform.position,
+                points[6].transform.position,
+                transform.position
+            };
+
+            lineRenderer.positionCount = positions.Length;
+
+            lineRenderer.SetPositions(positions);
+        }
+
+        if (points[0] != null && points[1] != null && points[2] != null &&
+            points[3] != null && points[4] != null && points[5] != null &&
+            points[6] != null && points[7] != null && points[8] == null)
+        {
+            lineRenderer.enabled = true;
+            var positions = new Vector3[]
+            {
+                points[0].transform.position,
+                points[1].transform.position,
+                points[2].transform.position,
+                points[3].transform.position,
+                points[4].transform.position,
+                points[5].transform.position,
+                points[6].transform.position,
+                points[7].transform.position,
+                transform.position
+            };
+
+            lineRenderer.positionCount = positions.Length;
+
+            lineRenderer.SetPositions(positions);
+        }
+
+        if (points[0] != null && points[1] != null && points[2] != null &&
+            points[3] != null && points[4] != null && points[5] != null &&
+            points[6] != null && points[7] != null && points[8] != null)
+        {
+            lineRenderer.enabled = true;
+            var positions = new Vector3[]
+            {
+                points[0].transform.position,
+                points[1].transform.position,
+                points[2].transform.position,
+                points[3].transform.position,
+                points[4].transform.position,
+                points[5].transform.position,
+                points[6].transform.position,
+                points[7].transform.position,
+                points[8].transform.position,
+                transform.position
+            };
+
+            lineRenderer.positionCount = positions.Length;
+
+            lineRenderer.SetPositions(positions);
+        }
+
+
     }
 
-    void Look()
-    {
-        var aim = targetObject.transform.position - transform.position;
-        var look = Quaternion.LookRotation(aim);
-        transform.localRotation = look;
-    }
 
-    
 }
