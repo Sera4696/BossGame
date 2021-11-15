@@ -113,6 +113,16 @@ public class Player : MonoBehaviour
         
         if (isMove)
         {
+            float hori = Input.GetAxis("Horizontal");
+            if (hori < 0)
+            {
+                aroundTime += 0.01f;
+            }
+            if (hori > 0)
+            {
+                aroundTime += -0.01f;
+            }
+
             if (Input.GetKey(KeyCode.A))
             {
                 aroundTime += 0.01f;
@@ -150,7 +160,7 @@ public class Player : MonoBehaviour
 
     void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isDash && !isBoostDash)// && points[0] != null)
+        if (Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown("joystick button 1") && !isDash && !isBoostDash)// && points[0] != null)
         {
             Ins();
             dashNowPosition = dashPosition.position;
@@ -199,7 +209,7 @@ public class Player : MonoBehaviour
 
     void BoostDash()
     {
-        if(Input.GetKeyDown(KeyCode.B) && !isBoostDash && !isDash && points[0] != null)
+        if(Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0")  && !isBoostDash && !isDash && points[0] != null)
         {
             isBoostDash = true;
             isMove = false;
