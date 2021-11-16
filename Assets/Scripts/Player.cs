@@ -229,7 +229,7 @@ public class Player : MonoBehaviour
         {
             mainCamera.SetActive(false);
             subCamera.SetActive(true);
-            boostdashSpeed += 0.01f;
+            boostdashSpeed += 0.005f;
             transform.position = Vector3.Lerp(transform.position, points[pointCount - 1].transform.position, boostdashSpeed);
 
             if (transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
