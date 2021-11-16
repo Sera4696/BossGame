@@ -5,82 +5,47 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //プレイヤーの回転移動
-    [SerializeField] private int speed;                //オブジェクトのスピード
+    [SerializeField] private int speed;                //オブジェクトのスピード(1)
     [SerializeField] private int radius;               //円を描く半径
-    [SerializeField] private Vector3 defPosition;      //defPositionをVector3で定義する。
-    [SerializeField] float x;
-    [SerializeField] float z;
-    [SerializeField] float aroundTime;
-    [SerializeField] private bool isMove;
+    [SerializeField] private Vector3 defPosition;      //中心の座標
+    [SerializeField] float x;                          //xの回転補正値
+    [SerializeField] float z;　　　　　　　　　　　　　//zの回転補正値
+    [SerializeField] float aroundTime;　　　　　　　　 //周期
+    [SerializeField] private bool isMove;              //移動できるか、しているか
 
     //プレイヤーのダッシュ
-    [SerializeField] private bool isDash;
-    [SerializeField] private Transform dashPosition;
-    [SerializeField] private Vector3 dashNowPosition;
-    [SerializeField] private float dashSpeedCount;
-    [SerializeField] private float dashSpeed;
+    [SerializeField] private bool isDash;　　　　　　　//ダッシュできるか、しているか
+    [SerializeField] private Transform dashPosition;   //ダッシュ先の位置
+    [SerializeField] private Vector3 dashNowPosition;　//ダッシュする瞬間のダッシュ先の位置
+    [SerializeField] private float dashSpeedCount;　　 //ダッシュの加速値
+    [SerializeField] private float dashSpeed;　　　　　//何ずつダッシュスピードに代入するか
 
     //プレーヤーのブーストダッシュ
-    [SerializeField] private bool isBoostDash;
-    [SerializeField] private float boostdashSpeed;
+    [SerializeField] private bool isBoostDash;         //スーパーダッシュしてるか
+    [SerializeField] private float boostdashSpeed;　　 //スーパーダッシュの加速値
 
     //ポイント系
-    [SerializeField] private GameObject[] points;
-    [SerializeField] private int pointCount;
-    [SerializeField] public GameObject insPoint;
-
-
+    [SerializeField] private GameObject[] points;　　　//ダッシュポイントの配列
+    [SerializeField] private int pointCount;　　　　　 //ダッシュポイントの数
+    [SerializeField] public GameObject insPoint;　　　 //ダッシュポイントのプレハブ
 
     //その他
-    [SerializeField] public GameObject targetObject;
-    [SerializeField] private LineRenderer lineRenderer;
-    [SerializeField] private int reverse;
+    [SerializeField] public GameObject targetObject;　 //ダッシュ先のポイント
+    [SerializeField] private LineRenderer lineRenderer;//ライン表示
+    [SerializeField] private int reverse;　　　　　　　//値の反転
 
     //カメラ演出
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private GameObject subCamera;
     
-    //[SerializeField] private float speed;                //オブジェクトのスピード
-    //[SerializeField] private int radius;               //円を描く半径
-    //private Vector3 defPosition;      //defPositionをVector3で定義する。
-    //float x;
-    //float z;
-
-
-    //[SerializeField] private Vector3 center;
-    //[SerializeField] private Vector3 centerUp;
-    //[SerializeField] private Vector3 centerDown;
-
-    //// 回転軸
-    //[SerializeField] private Vector3 axis;
-
-    //// 円運動周期
-    //[SerializeField] private float _period;
-
-
-    //[SerializeField] private bool isMoveUpDown;
-    //[SerializeField] private float moveCount;
-
-    //[SerializeField] private int insCount;
-
-
+    
 
     //[SerializeField] private GameObject[] points;
 
     // Start is called before the first frame update
     void Start()
     {
-          
-        //center = new Vector3(0, 10, 0);
-        //centerUp = new Vector3(0, 20, 0);
-        //centerDown = new Vector3(0, -20, 0);
-        //axis = new Vector3(0, 1, 0);
-
-        //isMoveUpDown = false;
-
-        //insCount = 3;
-        
-        
+                          
         //プレイヤーの回転移動
         speed = 1;
         radius = 35;
@@ -120,10 +85,12 @@ public class Player : MonoBehaviour
 
     public void Move()
     {
-        
+        //移動回転の処理
         if (isMove)
         {
             float hori = Input.GetAxis("Horizontal");
+
+            //周期の値の増減
             if (hori < 0)
             {
                 aroundTime += 0.01f;
@@ -143,17 +110,19 @@ public class Player : MonoBehaviour
                 aroundTime += -0.01f;
             }
 
+            //補正の式
             x = radius * Mathf.Sin(aroundTime * speed) * reverse;      //X軸の設定
             z = radius * Mathf.Cos(aroundTime * speed) * reverse;      //Z軸の設定  
 
             transform.position = new Vector3(x + defPosition.x, defPosition.y, z + defPosition.z);  //自分のいる位置から座標を動かす。
         }
-
     }
 
+
+    //ダッシュポイントの生成
     void Ins()
     {
-        if (pointCount < 8)
+        if (pointCount < 8)　//ポイントの上限の数
         {
             points[pointCount] = Instantiate(insPoint, transform.position, Quaternion.identity);
             pointCount++;
@@ -168,21 +137,25 @@ public class Player : MonoBehaviour
         //}
     }
 
+    //ダッシュの処理
     void Dash()
     {
+        //ダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中なら
         if (Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown("joystick button 1") && !isDash && !isBoostDash)// && points[0] != null)
         {
             Ins();
-            dashNowPosition = dashPosition.position;
-            isDash = true;
+            dashNowPosition = dashPosition.position;   //ボタンを押した瞬間にダッシュ先の位置を代入する
+            isDash = true;　　　　　　　　　　　　　　 
             isMove = false;
         }
 
         if (isDash == true)
         {
+            //ダッシュスピードカウントを決まった値分増加させる
             dashSpeedCount += dashSpeed / 10;
             transform.position = Vector3.Lerp(transform.position, dashNowPosition, dashSpeedCount);
 
+            //位置の補正
             if(transform.position == dashNowPosition)
             {
                 reverse *= -1;
@@ -200,25 +173,12 @@ public class Player : MonoBehaviour
                 dashSpeedCount = 0;
             }
         }
-
-        //if(isDash)
-        //{
-        //    
-
-        //    if(transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
-        //    {
-        //        Destroy(points[pointCount - 1]);
-        //        pointCount--;
-        //    }
-
-        //    
-
-        //    
-        //}
     }
 
+    //スーパーダッシュの処理
     void BoostDash()
     {
+        //スーパーダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中でないかつポイントがnullでないなら
         if(Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0")  && !isBoostDash && !isDash && points[0] != null)
         {
             isBoostDash = true;
@@ -229,15 +189,17 @@ public class Player : MonoBehaviour
         {
             mainCamera.SetActive(false);
             subCamera.SetActive(true);
-            boostdashSpeed += 0.005f;
+            boostdashSpeed += 0.01f;　　　//どのぐらいの速度で加速するのか
             transform.position = Vector3.Lerp(transform.position, points[pointCount - 1].transform.position, boostdashSpeed);
 
+            //目標ポイントまで移動出来たかつ配列が終点でないなら
             if (transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
             {
                 Destroy(points[pointCount - 1]);
                 pointCount--;
             }
 
+            //目標ポイントが終点まで行きついたなら
             if (transform.position == points[0].transform.position)
             {
                 pointCount = 0;
