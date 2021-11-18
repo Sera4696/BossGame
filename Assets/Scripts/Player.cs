@@ -1,9 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    //プレイヤーのステータス
+    [SerializeField] static int attack;                //攻撃力
+    [SerializeField] static int hp;　　　　　　　　　　//HP
+
     //プレイヤーの回転移動
     [SerializeField] private int speed;                //オブジェクトのスピード(1)
     [SerializeField] private int radius;               //円を描く半径
@@ -32,19 +37,25 @@ public class Player : MonoBehaviour
     //その他
     [SerializeField] public GameObject targetObject;　 //ダッシュ先のポイント
     [SerializeField] private LineRenderer lineRenderer;//ライン表示
-    [SerializeField] private int reverse;　　　　　　　//値の反転
+    [SerializeField] private int reverse;              //値の反転
+    //[SerializeField] public GameObject boss;
+    //[SerializeField] public Boss bossScr;
 
     //カメラ演出
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private GameObject subCamera;
-    
-    
+
+    [SerializeField] public GameObject HP_Object;
+    [SerializeField] public GameObject A_Object;
 
     //[SerializeField] private GameObject[] points;
 
     // Start is called before the first frame update
     void Start()
     {
+        hp = 50;
+        attack = 30;
+
                           
         //プレイヤーの回転移動
         speed = 1;
@@ -61,7 +72,7 @@ public class Player : MonoBehaviour
 
         //その他
         reverse = -1;
-
+        //bossScr = boss.GetComponent<Boss>();
 
         pointCount = 0;
 
@@ -80,7 +91,8 @@ public class Player : MonoBehaviour
         Move();
         Dash();
         BoostDash();
-        Line();      
+        Line();
+        Texts();
     }
 
     public void Move()
@@ -437,5 +449,31 @@ public class Player : MonoBehaviour
 
     }
 
+    void Texts()
+    {
+        Text HP_Text = HP_Object.GetComponent<Text>();
+        Text A_Text = A_Object.GetComponent<Text>();
 
+        HP_Text.text = "Player_HP : " + hp;
+        A_Text.text = "Player_Attack : " + attack;
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Shot")
+        {
+            hp -= 10; 
+        }
+
+        if (other.gameObject.tag == "Boss")
+        {
+            Boss.hp -= attack - Boss.defence;
+        }
+
+        if (other.gameObject.tag == "Defence")
+        {
+            Boss.defence -= 5;
+            Destroy(other.gameObject);
+        }
+    }
 }

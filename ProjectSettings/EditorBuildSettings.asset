@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/YasuScene.unity
+    guid: 7faaf5ce6f0a0f14dbb7a68431cb6ecf
   m_configObjects: {}
