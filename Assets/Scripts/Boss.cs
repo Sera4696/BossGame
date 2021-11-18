@@ -66,7 +66,7 @@ public class Boss : MonoBehaviour
         //攻撃が始まるまでのカウント
         if (attackCount == 500.0f)
         {
-            //bossAttack = 3;
+            //bossAttack = 1;
             //度の攻撃かをランダムで選ぶ
             bossAttack = Random.Range(1, 4);
         }

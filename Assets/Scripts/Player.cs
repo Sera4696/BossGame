@@ -204,6 +204,8 @@ public class Player : MonoBehaviour
             boostdashSpeed += 0.01f;　　　//どのぐらいの速度で加速するのか
             transform.position = Vector3.Lerp(transform.position, points[pointCount - 1].transform.position, boostdashSpeed);
 
+
+
             //目標ポイントまで移動出来たかつ配列が終点でないなら
             if (transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
             {
