@@ -27,6 +27,7 @@ public class TitleDash : MonoBehaviour
     //プレーヤーのブーストダッシュ
     [SerializeField] private bool isBoostDash;         //スーパーダッシュしてるか
     [SerializeField] private float boostdashSpeed;　　 //スーパーダッシュの加速値
+    
 
     //ポイント系
     [SerializeField] private GameObject[] points;　　　//ダッシュポイントの配列
@@ -149,11 +150,24 @@ public class TitleDash : MonoBehaviour
         {
            
             boostdashSpeed += 0.003f;　　　//どのぐらいの速度で加速するのか
-            //transform.position = Vector3.Lerp(transform.position, points[pointCount - 1].transform.position, boostdashSpeed);
-            transform.DOMove(new Vector3(points[pointCount - 1].transform.position.x, points[pointCount - 1].transform.position.y, points[pointCount - 1].transform.position.z), 0.2f).SetEase(Ease.OutQuad);
+
+            if (boostdashSpeed >= 0.2f)
+            {
+                boostdashSpeed = 0.2f;
+            }
+
+            transform.position = Vector3.Lerp(transform.position, points[pointCount - 1].transform.position, boostdashSpeed);
+            //transform.DOMove(new Vector3(points[pointCount - 1].transform.position.x, points[pointCount - 1].transform.position.y, points[pointCount - 1].transform.position.z), 0.2f).SetEase(Ease.OutQuad);
+
+            float distance = Vector3.Distance(transform.position, points[pointCount - 1].transform.position);
+
+            if(distance < 1f)
+            {
+                transform.position = points[pointCount - 1].transform.position;
+            }
 
             //目標ポイントまで移動出来たかつ配列が終点でないなら
-            if (transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
+            if (transform.position == points[pointCount - 1].transform.position && pointCount != 0)
             {
                 Destroy(points[pointCount - 1]);
                 pointCount--;
