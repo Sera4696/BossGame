@@ -1361,6 +1361,7 @@ GameObject:
   - component: {fileID: 1674525085}
   - component: {fileID: 1674525090}
   - component: {fileID: 1674525091}
+  - component: {fileID: 1674525092}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1424,10 +1425,10 @@ SphereCollider:
   m_GameObject: {fileID: 1674525084}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 2.5604467
+  m_Center: {x: 0.31608105, y: 0, z: -0.0844059}
 --- !u!23 &1674525087
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1613,6 +1614,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &1674525092
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674525084}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.4865636
+  m_Height: 5.257803
+  m_Direction: 2
+  m_Center: {x: 0.119127035, y: -0.20607078, z: -0.067736626}
 --- !u!1001 &1728149525
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1822,6 +1837,7 @@ MonoBehaviour:
   - {fileID: 0}
   insShot: {fileID: 7169552011481764078, guid: 5e7d2d0c14881bc4c873efcbf103401f, type: 3}
   shotAttackCount: 0
+  shotCount: 0
   shotTimer: 0
   insAroundShot: {fileID: 813939111114905062, guid: 043d3550a92781246a9a8c3f95feda22,
     type: 3}
@@ -1852,6 +1868,12 @@ MonoBehaviour:
   defenceCount: 0
   insDefence: {fileID: 4761776781020964098, guid: 23a9015cb35f16745a1ac15263b1b66a,
     type: 3}
+  nowRoop: []
+  defPosition: {x: 0, y: 0, z: 0}
+  radius: 0
+  aroundTime: 0
+  aroundTime2: 0
+  RoopTimer: 0
   targetObject: {fileID: 1674525084}
   HP_Object: {fileID: 511232644}
   D_Object: {fileID: 1799213831}

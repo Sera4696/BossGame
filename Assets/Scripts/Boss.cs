@@ -14,7 +14,9 @@ public class Boss : MonoBehaviour
     [SerializeField] private GameObject[] shotObjects;           //
     [SerializeField] private GameObject insShot;                 //
     [SerializeField] private int shotAttackCount;                //
+    [SerializeField] private int shotCount;
     [SerializeField] private int shotTimer;                      //
+
 
     [SerializeField] private GameObject insAroundShot;           // 
     private float k;
@@ -31,6 +33,13 @@ public class Boss : MonoBehaviour
     [SerializeField] private int defenceCount;
     [SerializeField] private GameObject insDefence;
 
+    [SerializeField] private GameObject[] nowRoop;
+    [SerializeField] private Vector3 defPosition;
+    [SerializeField] private int radius;
+    [SerializeField] float aroundTime;
+    [SerializeField] float aroundTime2;
+    [SerializeField] private float RoopTimer;
+
     [SerializeField] public GameObject targetObject;
 
     [SerializeField] public GameObject HP_Object;
@@ -44,6 +53,8 @@ public class Boss : MonoBehaviour
         bossAttack = 0;
         attackCount = 0;
         downAttackCount = 0;
+
+        radius = 35;
     }
 
     // Update is called once per frame
@@ -69,14 +80,12 @@ public class Boss : MonoBehaviour
             transform.localScale = new Vector3(10, 4, 10);
         }
 
-
-
         if (attackCount == 500.0f)
         {
-            //bossAttack = 1;
+            bossAttack = 5;
             //度の攻撃かをランダムで選ぶ
             transform.localScale = new Vector3(14, 6, 14);
-            bossAttack = Random.Range(1, 4);
+            //bossAttack = Random.Range(1, 5);
         }
 
         if (bossAttack == 1)
@@ -98,25 +107,90 @@ public class Boss : MonoBehaviour
         {
             AroundShot();
         }
+
+        if (bossAttack == 5)
+        {
+            Roop();
+        }
     }
 
     void Shot()
     {
-        if(shotAttackCount < 1)
+        //if (shotAttackCount < 1)
+        //{
+        //    shotObjects[0] = Instantiate(insShot, transform.position, Quaternion.identity);
+        //    shotAttackCount++;
+        //}
+
+        shotCount++;
+
+        if (shotAttackCount < 5)
         {
-            shotObjects[0] = Instantiate(insShot, transform.position, Quaternion.identity);
-            shotAttackCount++;           
+            if (shotCount == 1)
+            {
+                shotObjects[0] = Instantiate(insShot, transform.position, Quaternion.identity);
+                shotAttackCount++;
+            }
+
+            if (shotCount == 21)
+            {
+                shotObjects[1] = Instantiate(insShot, transform.position, Quaternion.identity);
+                shotAttackCount++;
+            }
+
+            if (shotCount == 41)
+            {
+                shotObjects[2] = Instantiate(insShot, transform.position, Quaternion.identity);
+                shotAttackCount++;
+            }
+
+            if (shotCount == 61)
+            {
+                shotObjects[3] = Instantiate(insShot, transform.position, Quaternion.identity);
+                shotAttackCount++;
+            }
+
+            if (shotCount == 81)
+            {
+                shotObjects[4] = Instantiate(insShot, transform.position, Quaternion.identity);
+                shotAttackCount++;
+            }
         }
-        
-        if(shotObjects[0] != null)
+
+
+        if (shotObjects[0] != null)
         {
             shotObjects[0].transform.position += transform.forward * 0.5f;
             shotTimer++;
         }
 
+        if (shotObjects[1] != null)
+        {
+            shotObjects[1].transform.position += transform.forward * 0.5f;
+        }
+
+        if (shotObjects[2] != null)
+        {
+            shotObjects[2].transform.position += transform.forward * 0.5f;
+        }
+
+        if (shotObjects[3] != null)
+        {
+            shotObjects[3].transform.position += transform.forward * 0.5f;
+        }
+
+        if (shotObjects[4] != null)
+        {
+            shotObjects[4].transform.position += transform.forward * 0.5f;
+        }
+
         if (shotTimer > 500)
         {
             Destroy(shotObjects[0]);
+            Destroy(shotObjects[1]);
+            Destroy(shotObjects[2]);
+            Destroy(shotObjects[3]);
+            Destroy(shotObjects[4]);
         }
 
         if (shotObjects[0] == null)
@@ -125,6 +199,7 @@ public class Boss : MonoBehaviour
             shotTimer = 0;
             bossAttack = 0;
             attackCount = 0;
+            shotCount = 0;
         }
     }
 
@@ -182,7 +257,8 @@ public class Boss : MonoBehaviour
             shotObjects[1] == null &&
             shotObjects[2] == null &&
             shotObjects[3] == null &&
-            shotObjects[4] == null)
+            shotObjects[4] == null &&
+            shotTimer > 500)
         {
             shotAttackCount = 0;
             shotTimer = 0;
@@ -235,9 +311,16 @@ public class Boss : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                if(nowDefence[defenceCount] == null)
+                // rangeAとrangeBのx座標の範囲内でランダムな数値を作成
+                float x = Random.Range(-25, 25);
+                // rangeAとrangeBのy座標の範囲内でランダムな数値を作成
+                float y = Random.Range(-8, 8);
+                // rangeAとrangeBのz座標の範囲内でランダムな数値を作成
+                float z = Random.Range(-25, 25);
+
+                if (nowDefence[defenceCount] == null)
                 {
-                    nowDefence[defenceCount] = Instantiate(insDefence, transform.position, Quaternion.identity);                    
+                    nowDefence[defenceCount] = Instantiate(insDefence, new Vector3(x, y, z), Quaternion.identity);                    
                 }
                 defenceCount++;
             }
@@ -250,6 +333,54 @@ public class Boss : MonoBehaviour
             attackCount = 0;
             defenceCount = 0;
         }
+    }
+
+    void Roop()
+    {
+        RoopTimer++;
+
+        float x = radius * Mathf.Sin(aroundTime);      //X軸の設定
+        float z = radius * Mathf.Cos(aroundTime);      //Z軸の設定 
+
+        float x2 = radius * Mathf.Sin(aroundTime2);      //X軸の設定
+        float z2 = radius * Mathf.Cos(aroundTime2);      //Z軸の設定
+        
+        Vector3 NR1 = new Vector3(x , 15 , z);
+        Vector3 NR2 = new Vector3(x2, -15, z2);
+
+        if (RoopTimer == 5)
+        {
+            aroundTime = Random.Range(0, 6.28f);
+            nowRoop[0] = Instantiate(insShot, NR1, Quaternion.identity);
+
+            aroundTime2 = Random.Range(0, 6.28f);
+            nowRoop[1] = Instantiate(insShot, NR2, Quaternion.identity);
+        }
+
+        if(nowRoop[0] != null)
+        {
+            aroundTime += 0.002f;
+            nowRoop[0].transform.position = NR1;
+        }
+
+        if (nowRoop[1] != null)
+        {
+            aroundTime2 += 0.002f;
+            nowRoop[1].transform.position = NR2;
+        }
+
+        if(RoopTimer > 500)
+        {
+            Destroy(nowRoop[0]);
+            Destroy(nowRoop[1]);
+        }
+
+        if (RoopTimer > 500 && nowRoop[0] == null && nowRoop[1] == null)
+        {
+            bossAttack = 0;
+            attackCount = 0;
+        }
+        //transform.position = new Vector3(x + defPosition.x, defPosition.y, z + defPosition.z);
     }
 
     void Texts()
