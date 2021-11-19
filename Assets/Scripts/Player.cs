@@ -153,31 +153,37 @@ public class Player : MonoBehaviour
     void Dash()
     {
         //ダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中なら
-        if (Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown("joystick button 1") && !isDash && !isBoostDash)// && points[0] != null)
+        if ((Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown("joystick button 1")) && !isDash && !isBoostDash)// && points[0] != null)
         {
             Ins();
             dashNowPosition = dashPosition.position;   //ボタンを押した瞬間にダッシュ先の位置を代入する
             isDash = true;　　　　　　　　　　　　　　 
             isMove = false;
+            isBoostDash = false;
         }
 
         if (isDash == true)
         {
+            isBoostDash = false;
             //ダッシュスピードカウントを決まった値分増加させる
             dashSpeedCount += dashSpeed / 10;
             transform.position = Vector3.Lerp(transform.position, dashNowPosition, dashSpeedCount);
 
+            
+
             //位置の補正
-            if(transform.position == dashNowPosition)
+            if (transform.position == dashNowPosition)
             {
                 reverse *= -1;
                 defPosition.y *= -1;
 
                 dashSpeed -= 0.002f;
-                if(dashSpeed < 0.001f)
+
+                if (dashSpeed < 0.001f)
                 {
                     dashSpeed = 0.001f;
                 }
+
                 //transform.localScale *= 2;
 
                 isDash = false;
@@ -195,24 +201,27 @@ public class Player : MonoBehaviour
         {
             isBoostDash = true;
             isMove = false;
+            isDash = false;
         }
 
         if(isBoostDash==true)
         {
+            isDash = false;
             mainCamera.SetActive(false);
             subCamera.SetActive(true);
-            boostdashSpeed += 0.01f;　　　//どのぐらいの速度で加速するのか
+            boostdashSpeed += 0.005f;　　　//どのぐらいの速度で加速するのか
+
             transform.position = Vector3.Lerp(transform.position, points[pointCount - 1].transform.position, boostdashSpeed);
 
-
-
             //目標ポイントまで移動出来たかつ配列が終点でないなら
-            if (transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
-            {
+            if (transform.transform.position == points[pointCount - 1].transform.position 
+                && pointCount != 0 && points[pointCount - 1] != null)
+            {              
                 Destroy(points[pointCount - 1]);
                 pointCount--;
             }
 
+           
             //目標ポイントが終点まで行きついたなら
             if (transform.position == points[0].transform.position)
             {

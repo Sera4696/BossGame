@@ -82,10 +82,10 @@ public class Boss : MonoBehaviour
 
         if (attackCount == 500.0f)
         {
-            bossAttack = 5;
+            //bossAttack = 5;
             //度の攻撃かをランダムで選ぶ
             transform.localScale = new Vector3(14, 6, 14);
-            //bossAttack = Random.Range(1, 5);
+            bossAttack = Random.Range(1, 5);
         }
 
         if (bossAttack == 1)

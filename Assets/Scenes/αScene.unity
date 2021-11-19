@@ -1868,7 +1868,9 @@ MonoBehaviour:
   defenceCount: 0
   insDefence: {fileID: 4761776781020964098, guid: 23a9015cb35f16745a1ac15263b1b66a,
     type: 3}
-  nowRoop: []
+  nowRoop:
+  - {fileID: 0}
+  - {fileID: 0}
   defPosition: {x: 0, y: 0, z: 0}
   radius: 0
   aroundTime: 0
