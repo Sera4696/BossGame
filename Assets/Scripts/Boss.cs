@@ -82,10 +82,10 @@ public class Boss : MonoBehaviour
 
         if (attackCount == 500.0f)
         {
-            bossAttack = 5;
+            //bossAttack = 5;
             //度の攻撃かをランダムで選ぶ
             transform.localScale = new Vector3(14, 6, 14);
-            //bossAttack = Random.Range(1, 5);
+            bossAttack = Random.Range(1, 5);
         }
 
         if (bossAttack == 1)
@@ -312,11 +312,11 @@ public class Boss : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 // rangeAとrangeBのx座標の範囲内でランダムな数値を作成
-                float x = Random.Range(-25, 25);
+                float x = Random.Range(-20, 20);
                 // rangeAとrangeBのy座標の範囲内でランダムな数値を作成
                 float y = Random.Range(-8, 8);
                 // rangeAとrangeBのz座標の範囲内でランダムな数値を作成
-                float z = Random.Range(-25, 25);
+                float z = Random.Range(-20, 20);
 
                 if (nowDefence[defenceCount] == null)
                 {

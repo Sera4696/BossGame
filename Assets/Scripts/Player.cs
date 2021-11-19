@@ -37,6 +37,8 @@ public class Player : MonoBehaviour
     //その他
     [SerializeField] public GameObject targetObject;　 //ダッシュ先のポイント
     [SerializeField] private LineRenderer lineRenderer;//ライン表示
+    [SerializeField] private TrailRenderer trailRenderer;//ダッシュの軌跡
+    private float trailTime=0;
     [SerializeField] private int reverse;              //値の反転
     //[SerializeField] public GameObject boss;
     //[SerializeField] public Boss bossScr;
@@ -72,6 +74,7 @@ public class Player : MonoBehaviour
 
         //その他
         reverse = -1;
+        trailRenderer.enabled = false;//ダッシュの軌跡
         //bossScr = boss.GetComponent<Boss>();
 
         pointCount = 0;
@@ -167,8 +170,15 @@ public class Player : MonoBehaviour
             dashSpeedCount += dashSpeed / 10;
             transform.position = Vector3.Lerp(transform.position, dashNowPosition, dashSpeedCount);
 
+            float distance = Vector3.Distance(transform.position, dashNowPosition);
+
+            if (distance < 1f)
+            {
+                transform.position = dashNowPosition;
+            }
+
             //位置の補正
-            if(transform.position == dashNowPosition)
+            if (transform.position == dashNowPosition)
             {
                 reverse *= -1;
                 defPosition.y *= -1;
@@ -195,20 +205,28 @@ public class Player : MonoBehaviour
         {
             isBoostDash = true;
             isMove = false;
+            trailRenderer.enabled = true;
         }
+
+        
 
         if(isBoostDash==true)
         {
             mainCamera.SetActive(false);
             subCamera.SetActive(true);
-            boostdashSpeed += 0.01f;　　　//どのぐらいの速度で加速するのか
-            if (boostdashSpeed >=0.1f)
-            {
-                boostdashSpeed = 0.1f;
-            }
+            boostdashSpeed += 0.001f;　　　//どのぐらいの速度で加速するのか
             transform.position = Vector3.Lerp(transform.position, points[pointCount - 1].transform.position, boostdashSpeed);
+            //if (boostdashSpeed >= 0.1f)
+            //{
+            //    boostdashSpeed = 0.1f;
+            //}
 
+            float distance = Vector3.Distance(transform.position, points[pointCount - 1].transform.position);
 
+            if (distance < 1f)
+            {
+                transform.position = points[pointCount - 1].transform.position;
+            }
 
             //目標ポイントまで移動出来たかつ配列が終点でないなら
             if (transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
@@ -233,6 +251,13 @@ public class Player : MonoBehaviour
         {
             mainCamera.SetActive(true);
             subCamera.SetActive(false);
+            trailTime += Time.deltaTime;
+            if (trailTime >= 2f)
+            {
+                //後にα値を下げるようにしてください
+                trailRenderer.enabled = false;
+                trailTime = 0;
+            }
         }
     }
 
