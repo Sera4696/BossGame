@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class TitleDash : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class TitleDash : MonoBehaviour
     //プレーヤーのブーストダッシュ
     [SerializeField] private bool isBoostDash;         //スーパーダッシュしてるか
     [SerializeField] private float boostdashSpeed;　　 //スーパーダッシュの加速値
+    
 
     //ポイント系
     [SerializeField] private GameObject[] points;　　　//ダッシュポイントの配列
@@ -36,12 +38,11 @@ public class TitleDash : MonoBehaviour
     [SerializeField] public GameObject targetObject;　 //ダッシュ先のポイント
     [SerializeField] private LineRenderer lineRenderer;//ライン表示
     [SerializeField] private int reverse;              //値の反転
-    //[SerializeField] public GameObject boss;
-    //[SerializeField] public Boss bossScr;
-    
+                                                       //[SerializeField] public GameObject boss;
+                                                       //[SerializeField] public Boss bossScr;
 
-    [SerializeField] public GameObject HP_Object;
-    [SerializeField] public GameObject A_Object;
+    [SerializeField] private GameObject titleCameraObj;
+    private TitleCamera titleCamera;
 
     //[SerializeField] private GameObject[] points;
 
@@ -66,19 +67,26 @@ public class TitleDash : MonoBehaviour
         reverse = -1;
         //bossScr = boss.GetComponent<Boss>();
 
-        pointCount = 0;
+        pointCount = 5;
 
         points[0] = Instantiate(insPoint, new Vector3(0,15,35), Quaternion.identity);
         points[1] = Instantiate(insPoint, new Vector3(0, -15, -35), Quaternion.identity);
         points[2] = Instantiate(insPoint, new Vector3(-35, -15, 0), Quaternion.identity);
         points[3] = Instantiate(insPoint, new Vector3(35, 15, 0), Quaternion.identity);
         points[4] = Instantiate(insPoint, new Vector3(0, -15, 35), Quaternion.identity);
-        
+
 
 
         //カメラ
+        titleCamera = titleCameraObj.GetComponent<TitleCamera>();
     }
 
+
+    private void FixedUpdate()
+    {
+
+        BoostDash();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -86,36 +94,42 @@ public class TitleDash : MonoBehaviour
         Look();
         Move();
         //Dash();
-        BoostDash();
         Line();
+         //スーパーダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中でないかつポイントがnullでないなら
+        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0") && !isBoostDash && !isDash && points[0] != null)
+        {
+            isBoostDash = true;
+            isMove = false;
+        }
     }
 
+    #region　移動関係
     public void Move()
     {
         //移動回転の処理
         if (isMove)
         {
-            float hori = Input.GetAxis("Horizontal");
+            //float hori = Input.GetAxis("Horizontal");
 
-            //周期の値の増減
-            if (hori < 0)
-            {
-                aroundTime += 0.01f;
-            }
-            if (hori > 0)
-            {
-                aroundTime += -0.01f;
-            }
+            ////周期の値の増減
+            //if (hori < 0)
+            //{
+            //    aroundTime += 0.01f;
+            //}
+            //if (hori > 0)
+            //{
+            //    aroundTime += -0.01f;
+            //}
 
-            if (Input.GetKey(KeyCode.A))
-            {
-                aroundTime += 0.01f;
-            }
+            //if (Input.GetKey(KeyCode.A))
+            //{
+            //    aroundTime += 0.01f;
+            //}
 
-            else if (Input.GetKey(KeyCode.D))
-            {
-                aroundTime += -0.01f;
-            }
+            //else if (Input.GetKey(KeyCode.D))
+            //{
+            //    aroundTime += -0.01f;
+            //}
 
             //補正の式
             x = radius * Mathf.Sin(aroundTime * speed) * reverse;      //X軸の設定
@@ -124,64 +138,36 @@ public class TitleDash : MonoBehaviour
             transform.position = new Vector3(x + defPosition.x, defPosition.y, z + defPosition.z);  //自分のいる位置から座標を動かす。
         }
     }
+    #endregion
 
-    
-
-    //ダッシュの処理
-    //void Dash()
-    //{
-    //    //ダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中なら
-    //    if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 1") && !isDash && !isBoostDash)// && points[0] != null)
-    //    {
-    //        dashNowPosition = dashPosition.position;   //ボタンを押した瞬間にダッシュ先の位置を代入する
-    //        isDash = true;
-    //        isMove = false;
-    //    }
-
-    //    if (isDash == true)
-    //    {
-    //        //ダッシュスピードカウントを決まった値分増加させる
-    //        dashSpeedCount += dashSpeed / 10;
-    //        transform.position = Vector3.Lerp(transform.position, dashNowPosition, dashSpeedCount);
-
-    //        //位置の補正
-    //        if (transform.position == dashNowPosition)
-    //        {
-    //            reverse *= -1;
-    //            defPosition.y *= -1;
-
-    //            dashSpeed -= 0.002f;
-    //            if (dashSpeed < 0.001f)
-    //            {
-    //                dashSpeed = 0.001f;
-    //            }
-    //            //transform.localScale *= 2;
-
-    //            isDash = false;
-    //            isMove = true;
-    //            dashSpeedCount = 0;
-    //        }
-    //    }
-    //}
 
     //スーパーダッシュの処理
     void BoostDash()
     {
-        //スーパーダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中でないかつポイントがnullでないなら
-        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0") && !isBoostDash && !isDash && points[0] != null)
-        {
-            isBoostDash = true;
-            isMove = false;
-        }
+       
 
         if (isBoostDash == true)
         {
            
-            boostdashSpeed += 0.01f;　　　//どのぐらいの速度で加速するのか
+            boostdashSpeed += 0.003f;　　　//どのぐらいの速度で加速するのか
+
+            if (boostdashSpeed >= 0.2f)
+            {
+                boostdashSpeed = 0.2f;
+            }
+
             transform.position = Vector3.Lerp(transform.position, points[pointCount - 1].transform.position, boostdashSpeed);
+            //transform.DOMove(new Vector3(points[pointCount - 1].transform.position.x, points[pointCount - 1].transform.position.y, points[pointCount - 1].transform.position.z), 0.2f).SetEase(Ease.OutQuad);
+
+            float distance = Vector3.Distance(transform.position, points[pointCount - 1].transform.position);
+
+            if(distance < 1f)
+            {
+                transform.position = points[pointCount - 1].transform.position;
+            }
 
             //目標ポイントまで移動出来たかつ配列が終点でないなら
-            if (transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
+            if (transform.position == points[pointCount - 1].transform.position && pointCount != 0)
             {
                 Destroy(points[pointCount - 1]);
                 pointCount--;
@@ -191,11 +177,12 @@ public class TitleDash : MonoBehaviour
             if (transform.position == points[0].transform.position)
             {
                 pointCount = 0;
-                dashSpeed = 0.02f;
+                dashSpeed = 0.001f;
                 boostdashSpeed = 0;
                 isBoostDash = false;
                 Destroy(points[0]);
-                isMove = true;
+                titleCamera.isTitle = true;
+                //isMove = true;
             }
         }
         
@@ -209,7 +196,7 @@ public class TitleDash : MonoBehaviour
         //var look = Quaternion.LookRotation(aim);
         //transform.localRotation = look;
     }
-
+    #region 線の描画関係
     void Line()
     {
         //if(isMove)
@@ -419,7 +406,7 @@ public class TitleDash : MonoBehaviour
 
 
     }
-
+    #endregion
 
     public void OnTriggerEnter(Collider other)
     {
@@ -433,10 +420,6 @@ public class TitleDash : MonoBehaviour
            
         }
 
-        if (other.gameObject.tag == "Defence")
-        {
-            Boss.defence -= 5;
-            Destroy(other.gameObject);
-        }
+        
     }
 }
