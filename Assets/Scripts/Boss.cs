@@ -64,10 +64,18 @@ public class Boss : MonoBehaviour
         
         attackCount++;
         //攻撃が始まるまでのカウント
+        if (attackCount > 400 && attackCount < 500)
+        {
+            transform.localScale = new Vector3(10, 4, 10);
+        }
+
+
+
         if (attackCount == 500.0f)
         {
             //bossAttack = 1;
             //度の攻撃かをランダムで選ぶ
+            transform.localScale = new Vector3(14, 6, 14);
             bossAttack = Random.Range(1, 4);
         }
 
