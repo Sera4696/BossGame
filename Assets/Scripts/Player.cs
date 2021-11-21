@@ -162,10 +162,18 @@ public class Player : MonoBehaviour
             dashNowPosition = dashPosition.position;   //ボタンを押した瞬間にダッシュ先の位置を代入する
             isDash = true;　　　　　　　　　　　　　　 
             isMove = false;
+            isBoostDash = false;
+
+            float distance = Vector3.Distance(transform.position, dashNowPosition);
+            if (distance < 1f)
+            {
+                transform.position = dashNowPosition;
+            }
         }
 
         if (isDash == true)
         {
+            isBoostDash = false;
             //ダッシュスピードカウントを決まった値分増加させる
             dashSpeedCount += dashSpeed / 10;
             transform.position = Vector3.Lerp(transform.position, dashNowPosition, dashSpeedCount);
@@ -205,6 +213,7 @@ public class Player : MonoBehaviour
         {
             isBoostDash = true;
             isMove = false;
+            isDash = false;
             trailRenderer.enabled = true;
         }
 
@@ -212,6 +221,7 @@ public class Player : MonoBehaviour
 
         if(isBoostDash==true)
         {
+            isDash = false;
             mainCamera.SetActive(false);
             subCamera.SetActive(true);
             boostdashSpeed += 0.001f;　　　//どのぐらいの速度で加速するのか
