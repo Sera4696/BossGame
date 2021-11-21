@@ -1411,9 +1411,10 @@ MonoBehaviour:
     type: 3}
   targetObject: {fileID: 1968058486}
   lineRenderer: {fileID: 1674525090}
+  trailRenderer: {fileID: 0}
   reverse: 0
-  mainCamera: {fileID: 0}
-  subCamera: {fileID: 0}
+  mainCamera: {fileID: 2130852229}
+  subCamera: {fileID: 1026116409}
   HP_Object: {fileID: 402391319}
   A_Object: {fileID: 1754221229}
 --- !u!135 &1674525086

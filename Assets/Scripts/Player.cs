@@ -50,6 +50,10 @@ public class Player : MonoBehaviour
     [SerializeField] public GameObject HP_Object;
     [SerializeField] public GameObject A_Object;
 
+    //音関連
+    [SerializeField] private AudioClip tackle;
+    private AudioSource audioSource;
+
     //[SerializeField] private GameObject[] points;
 
     // Start is called before the first frame update
@@ -84,6 +88,9 @@ public class Player : MonoBehaviour
         subCamera = GameObject.Find("Sub Camera");
         subCamera.SetActive(false);
         mainCamera.SetActive(true);
+
+        //音関連
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -163,6 +170,8 @@ public class Player : MonoBehaviour
             isDash = true;　　　　　　　　　　　　　　 
             isMove = false;
             isBoostDash = false;
+            audioSource.PlayOneShot(tackle);
+            audioSource.pitch += 0.5f;
 
             float distance = Vector3.Distance(transform.position, dashNowPosition);
             if (distance < 1f)
@@ -174,6 +183,7 @@ public class Player : MonoBehaviour
         if (isDash == true)
         {
             isBoostDash = false;
+            
             //ダッシュスピードカウントを決まった値分増加させる
             dashSpeedCount += dashSpeed / 10;
             transform.position = Vector3.Lerp(transform.position, dashNowPosition, dashSpeedCount);
@@ -215,6 +225,7 @@ public class Player : MonoBehaviour
             isMove = false;
             isDash = false;
             trailRenderer.enabled = true;
+            audioSource.pitch = 1;
         }
 
         
