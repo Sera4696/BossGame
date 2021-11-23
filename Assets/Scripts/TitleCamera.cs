@@ -26,6 +26,10 @@ public class TitleCamera : MonoBehaviour
     [SerializeField] private GameObject PushAText;
     [SerializeField] private GameObject GameStartText;
     [SerializeField] private GameObject EndText;
+    
+    private void Start()
+    {
+    }
 
 
     private void FixedUpdate()
@@ -103,14 +107,15 @@ public class TitleCamera : MonoBehaviour
             }
             if (isCoice == true)
             {
-                if (Input.GetKeyDown("joystick button 0"))
+                if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown("joystick button 0"))
                 {
-                    SceneManager.LoadScene("NozaScene");
+                    //これをコピペすればフェードが動きます
+                    GameObject.Find("AwaParents").GetComponent<TestScript>().Fade();
                 }
             }
             if (isCoice == false)
             {
-                if (Input.GetKeyDown("joystick button 0"))
+                if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown("joystick button 0"))
                 {
 
                 }

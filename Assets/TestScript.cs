@@ -10,10 +10,10 @@ public class TestScript : MonoBehaviour
     //[SerializeField] private GameObject white;
     //[SerializeField] Animator awawa;
 
-    [SerializeField] private ParticleSystem awa1;
-    [SerializeField] private ParticleSystem awa2;
-    [SerializeField] private ParticleSystem awa3;
-    [SerializeField] private GameObject White;
+    [SerializeField] private  ParticleSystem awa1;
+    [SerializeField] private  ParticleSystem awa2;
+    [SerializeField] private  ParticleSystem awa3;
+    [SerializeField] private  GameObject White;
 
     [SerializeField] private GameObject dontDesCamera;
 
@@ -58,6 +58,7 @@ public class TestScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        #region デバッグ用
         if (Input.GetKeyDown(KeyCode.Y))
         {
             //Instantiate(Awawa, transform.position,Quaternion.identity);
@@ -67,7 +68,7 @@ public class TestScript : MonoBehaviour
             awa3.Play();
 
             //SearchCamera();
-            
+
             var sequence = DOTween.Sequence();
             sequence.AppendInterval(1f);
             sequence.Append(White.GetComponent<SpriteRenderer>().DOFade(1, 2).OnComplete(() =>
@@ -77,25 +78,52 @@ public class TestScript : MonoBehaviour
 
                 //SearchCamera();
             }));
-           
+
             sequence.AppendInterval(1f);
             sequence.Append(White.GetComponent<SpriteRenderer>().DOFade(0, 2));
-            
-            
+
+
             sequence.Play();
         }
-        //if()
+        #endregion
     }
 
-    void SearchCamera()
+    public void Fade()
+    {
+        Debug.Log("きたで");
+        awa1.Play();
+        awa2.Play();
+        awa3.Play();
+
+        //SearchCamera();
+
+        var sequence = DOTween.Sequence();
+        sequence.AppendInterval(1f);
+        sequence.Append(White.GetComponent<SpriteRenderer>().DOFade(1, 2).OnComplete(() =>
+        {
+
+            ChangeScene();
+
+            //SearchCamera();
+        }));
+
+        sequence.AppendInterval(1f);
+        sequence.Append(White.GetComponent<SpriteRenderer>().DOFade(0, 2));
+
+
+        sequence.Play();
+    }
+
+    public void SearchCamera()
     {
         GameObject mainCamera = GameObject.Find("Main Camera");
         transform.position = mainCamera.transform.position;
         transform.rotation = mainCamera.transform.rotation;
     }
 
-    void ChangeScene()
+    public static void ChangeScene()
     {
+        //ここで飛ぶ先のシーンを弄れるよ
         if (SceneManager.GetActiveScene().name == "TitleScene")
         {
             SceneManager.LoadScene("NozaScene");
