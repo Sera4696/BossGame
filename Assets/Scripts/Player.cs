@@ -303,7 +303,7 @@ public class Player : MonoBehaviour
     void BoostDash()
     {
         //スーパーダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中でないかつポイントがnullでないなら
-<<<<<<< HEAD
+
         if((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0"))  && !isBoostDash && !isDash && points[0] != null)
         {
             isBoostDash = true;
@@ -313,9 +313,6 @@ public class Player : MonoBehaviour
             audioSource.pitch = 1;
             audioSource.PlayOneShot(tackle);
         }
-=======
-       
->>>>>>> origin/last2_Yasu
 
         
 

@@ -8221,10 +8221,7 @@ MonoBehaviour:
     type: 3}
   blackMsk: {fileID: 950119382}
   Orca: {fileID: 683553394}
-  Dtarget:
-  - {fileID: 2025042843}
-  - {fileID: 996281966}
-  - {fileID: 518408616}
+  Dtarget: []
   PlayerSlider: {fileID: 1380658342}
 --- !u!135 &851149949
 SphereCollider:
