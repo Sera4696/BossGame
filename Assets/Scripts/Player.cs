@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
     //音関連
     [SerializeField] private AudioClip tackle;
     [SerializeField] private AudioClip BossAttack;
+    [SerializeField] private AudioClip Damage;
     private AudioSource audioSource;
 
     //子供関係
@@ -66,6 +67,7 @@ public class Player : MonoBehaviour
     private bool isBGM = false;
     private TimeManager timeManager;
     [SerializeField] private GameObject damageParticle;
+    [SerializeField] private GameObject attackParticle;
     [SerializeField] private GameObject blackMsk;
 
     [SerializeField] private GameObject Orca;
@@ -658,6 +660,7 @@ public class Player : MonoBehaviour
             {
                 hp -= 10;
                 PlayerSlider.value = (float)hp / (float)playerMaxHP;
+                audioSource.PlayOneShot(Damage);
                 DamageEfect();
                 //mainCamera.GetComponent<Gamemanager>().CameraShakes();
                 isBGM = true;
@@ -669,7 +672,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "Boss")
         {
             Boss.hp -= attack / Boss.defence;
-            
+            Instantiate(attackParticle, transform.position, Quaternion.identity);
             audioSource.PlayOneShot(BossAttack);
         }
 

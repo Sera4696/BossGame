@@ -63,6 +63,9 @@ public class Boss : MonoBehaviour
     [SerializeField] private Slider BossSlider;
     private int bossMaxHP;
 
+    //音関係
+    [SerializeField] private AudioClip nakigoe;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -93,6 +96,9 @@ public class Boss : MonoBehaviour
         area = 2;
 
         defence = 1;
+
+        //音
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -157,11 +163,13 @@ public class Boss : MonoBehaviour
             {
                 if (attackCount > 350 && attackCount < 400)
                 {
+                    
                     transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
                 }
 
                 if (attackCount == 400.0f)
                 {
+                    audioSource.PlayOneShot(nakigoe);
                     bossAttack = 1;
                     //度の攻撃かをランダムで選ぶ
                     transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
@@ -176,11 +184,13 @@ public class Boss : MonoBehaviour
                 maxSpeed = 0.06f;
                 if (attackCount > 300 && attackCount < 350)
                 {
+                   
                     transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
                 }
 
                 if (attackCount == 350.0f)
                 {
+                    audioSource.PlayOneShot(nakigoe);
                     //bossAttack = 5;
                     //度の攻撃かをランダムで選ぶ
                     transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
@@ -200,6 +210,7 @@ public class Boss : MonoBehaviour
 
                 if (attackCount == 300.0f)
                 {
+                    audioSource.PlayOneShot(nakigoe);
                     //bossAttack = 5;
                     //度の攻撃かをランダムで選ぶ
                     transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
@@ -219,6 +230,7 @@ public class Boss : MonoBehaviour
 
                 if (attackCount == 200.0f)
                 {
+                    audioSource.PlayOneShot(nakigoe);
                     //bossAttack = 5;
                     //度の攻撃かをランダムで選ぶ
                     transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
@@ -238,6 +250,7 @@ public class Boss : MonoBehaviour
 
                 if (attackCount == 150.0f)
                 {
+                    audioSource.PlayOneShot(nakigoe);
                     //bossAttack = 5;
                     //度の攻撃かをランダムで選ぶ
                     transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);

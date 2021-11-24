@@ -25,10 +25,8 @@ public class TimeManager : MonoBehaviour
         
     }
 
-
-    void Update()
+    private void FixedUpdate()
     {
-        //　スローダウンフラグがtrueの時は時間計測
         if (isSlowDown)
         {
             elapsedTime += Time.unscaledDeltaTime;
@@ -37,6 +35,20 @@ public class TimeManager : MonoBehaviour
                 SetNormalTime();
             }
         }
+    }
+
+
+    void Update()
+    {
+        //　スローダウンフラグがtrueの時は時間計測
+        //if (isSlowDown)
+        //{
+        //    elapsedTime += Time.unscaledDeltaTime;
+        //    if (elapsedTime >= slowTime)
+        //    {
+        //        SetNormalTime();
+        //    }
+        //}
         //if (Input.GetKeyDown(KeyCode.R))
         //{
         //    SlowDown();

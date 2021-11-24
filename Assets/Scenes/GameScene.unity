@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 33718791}
   - component: {fileID: 33718793}
   - component: {fileID: 33718792}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2169,7 +2169,7 @@ GameObject:
   - component: {fileID: 285310704}
   - component: {fileID: 285310706}
   - component: {fileID: 285310705}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2569,7 +2569,7 @@ GameObject:
   - component: {fileID: 340487831}
   - component: {fileID: 340487833}
   - component: {fileID: 340487832}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3815,7 +3815,7 @@ GameObject:
   - component: {fileID: 478536862}
   - component: {fileID: 478536861}
   - component: {fileID: 478536860}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3923,7 +3923,7 @@ GameObject:
   - component: {fileID: 484508509}
   - component: {fileID: 484508511}
   - component: {fileID: 484508510}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4489,7 +4489,7 @@ GameObject:
   - component: {fileID: 527608448}
   - component: {fileID: 527608450}
   - component: {fileID: 527608449}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4662,15 +4662,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556355980}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ba6bfe262185ab4daf83a3f05ea936f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _iteration: 1
-  _threshold: 0.547
-  _softThreshold: 0.364
-  _intensity: 0.9
+  _threshold: 0.46
+  _softThreshold: 0
+  _intensity: 3.8
   _debug: 0
   _material: {fileID: 2100000, guid: f9c7afc8584d37d45baa1f040b718222, type: 2}
 --- !u!114 &556355982
@@ -5515,7 +5515,7 @@ GameObject:
   - component: {fileID: 625182704}
   - component: {fileID: 625182706}
   - component: {fileID: 625182705}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5591,7 +5591,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 632608217}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5778,7 +5778,7 @@ GameObject:
   - component: {fileID: 654747282}
   - component: {fileID: 654747284}
   - component: {fileID: 654747283}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6441,7 +6441,7 @@ GameObject:
   - component: {fileID: 717497166}
   - component: {fileID: 717497168}
   - component: {fileID: 717497167}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6886,7 +6886,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 781783553}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8216,8 +8216,11 @@ MonoBehaviour:
   A_Object: {fileID: 654747281}
   tackle: {fileID: 8300000, guid: d894b2dd04fd37b4abc283a11d1749d5, type: 3}
   BossAttack: {fileID: 8300000, guid: 21110189f4deecc47a0949265adbb68c, type: 3}
+  Damage: {fileID: 8300000, guid: 87284ac9e0c1e8447bb64321a6269c04, type: 3}
   ChildrenOrca: {fileID: 683553394}
   damageParticle: {fileID: 512872480696412514, guid: 40027e1611f65274a83adbd71c650c86,
+    type: 3}
+  attackParticle: {fileID: 512872480696412514, guid: 1b7d13f83291a094bae7ea5ca2bb1d7f,
     type: 3}
   blackMsk: {fileID: 950119382}
   Orca: {fileID: 683553394}
@@ -9482,7 +9485,7 @@ Transform:
   m_GameObject: {fileID: 950119382}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 200, z: 40}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 13
@@ -10440,7 +10443,7 @@ GameObject:
   - component: {fileID: 1076572212}
   - component: {fileID: 1076572214}
   - component: {fileID: 1076572213}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12208,7 +12211,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1263479810}
   - component: {fileID: 1263479811}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: BossHP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12274,7 +12277,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 484508509}
   m_HandleRect: {fileID: 0}
@@ -13263,7 +13266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1380658341}
   - component: {fileID: 1380658342}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: PlayerHP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13329,7 +13332,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 340487831}
   m_HandleRect: {fileID: 0}
@@ -14493,7 +14496,7 @@ GameObject:
   - component: {fileID: 1540898744}
   - component: {fileID: 1540898746}
   - component: {fileID: 1540898745}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Stick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14602,7 +14605,7 @@ GameObject:
   - component: {fileID: 1544636410}
   - component: {fileID: 1544636412}
   - component: {fileID: 1544636411}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: sousa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16188,7 +16191,7 @@ GameObject:
   - component: {fileID: 1830442449}
   - component: {fileID: 1830442451}
   - component: {fileID: 1830442450}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16607,7 +16610,7 @@ GameObject:
   - component: {fileID: 1887490594}
   - component: {fileID: 1887490596}
   - component: {fileID: 1887490595}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17704,6 +17707,7 @@ GameObject:
   - component: {fileID: 2025042846}
   - component: {fileID: 2025042845}
   - component: {fileID: 2025042844}
+  - component: {fileID: 2025042849}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -17792,6 +17796,7 @@ MonoBehaviour:
   maxSpeed: 0
   area: 0
   BossSlider: {fileID: 1263479811}
+  nakigoe: {fileID: 8300000, guid: 3a6e6cc4f655243459c308299ecac2f4, type: 3}
 --- !u!136 &2025042845
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -17868,6 +17873,102 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &2025042849
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025042843}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.8
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &2037904152
 PrefabInstance:
   m_ObjectHideFlags: 0
