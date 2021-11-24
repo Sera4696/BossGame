@@ -27,4 +27,9 @@ public class Gamemanager : MonoBehaviour
            StartCoroutine(CameraShake.Shake(0.2f, 1f));
         }
     }
+
+    public void CameraShakes()
+    {
+        StartCoroutine(CameraShake.Shake(0.2f, 0.3f));
+    }
 }

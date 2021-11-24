@@ -58,12 +58,19 @@ public class Boss : MonoBehaviour
     [SerializeField] public float minSpeed;
     [SerializeField] public float maxSpeed;
     [SerializeField] public float area;
-    
+
+    //体力
+    [SerializeField] private Slider BossSlider;
+    private int bossMaxHP;
+
 
     // Start is called before the first frame update
     void Start()
     {
         hp = 5000;
+
+        BossSlider.value = 1;
+        bossMaxHP = hp;
 
         bossAttack = 0;
         attackCount = 0;
@@ -95,8 +102,8 @@ public class Boss : MonoBehaviour
         BossAttack();
         Look();
         Texts();
-
-        if(Input.GetKeyDown(KeyCode.L))
+        BossSlider.value = (float)hp / (float)bossMaxHP;
+        if (Input.GetKeyDown(KeyCode.L))
         {
             hp -= 100;
         }

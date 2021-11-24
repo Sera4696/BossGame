@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
     //カメラ演出
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private GameObject subCamera;
+    
 
     [SerializeField] public GameObject HP_Object;
     [SerializeField] public GameObject A_Object;
@@ -71,6 +72,7 @@ public class Player : MonoBehaviour
     //[SerializeField] private Slider BossSlider;
     [SerializeField] private Slider PlayerSlider;
     private int playerMaxHP;
+    
 
     int DCount;
     bool isMMM;
@@ -86,7 +88,7 @@ public class Player : MonoBehaviour
     {
         hp = 100;
         attack = 40;
-       //BossSlider.value = 1;
+      
         PlayerSlider.value = 1;
         playerMaxHP = hp;
 
@@ -632,6 +634,7 @@ public class Player : MonoBehaviour
                 hp -= 10;
                 PlayerSlider.value = (float)hp / (float)playerMaxHP;
                 DamageEfect();
+                //mainCamera.GetComponent<Gamemanager>().CameraShakes();
                 isBGM = true;
                 timeManager.SlowDown();
                 //Destroy(other.gameObject);
@@ -641,6 +644,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "Boss")
         {
             Boss.hp -= attack / Boss.defence;
+            
             audioSource.PlayOneShot(BossAttack);
         }
 
