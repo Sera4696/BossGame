@@ -6,7 +6,6 @@ public class CameraShake : MonoBehaviour
 {
     public IEnumerator Shake(float duration, float magnitude)
     {
-        Debug.Log("ゆれた");
         Vector3 originalPosition = transform.position;
         float elapsed = 0f;
 

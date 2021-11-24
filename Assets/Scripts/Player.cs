@@ -7,8 +7,8 @@ using DG.Tweening;
 public class Player : MonoBehaviour
 {
     //プレイヤーのステータス
-    [SerializeField] static int attack;                //攻撃力
-    [SerializeField] static int hp;　　　　　　　　　　//HP
+    [SerializeField] public static int attack;                //攻撃力
+    [SerializeField] public static int hp;　　　　　　　　　　//HP
 
     //プレイヤーの回転移動
     [SerializeField] private int speed;                //オブジェクトのスピード(1)
@@ -60,11 +60,19 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject ChildrenOrca;
 
     //ダメージ関係
-    private float slowTime = 0;
+    private float bgmTimer = 0;
+    private bool isBGM = false;
     private TimeManager timeManager;
     [SerializeField] private GameObject damageParticle;
     [SerializeField] private GameObject blackMsk;
 
+    //体力関係
+    //[SerializeField] private Slider BossSlider;
+    [SerializeField] private Slider PlayerSlider;
+    private int playerMaxHP;
+
+    //シーン関係
+    private bool isDead = false,isChange=false;
     //[SerializeField] private GameObject[] points;
 
     // Start is called before the first frame update
@@ -72,8 +80,10 @@ public class Player : MonoBehaviour
     {
         hp = 100;
         attack = 30;
+       //BossSlider.value = 1;
+        PlayerSlider.value = 1;
+        playerMaxHP = hp;
 
-                          
         //プレイヤーの回転移動
         speed = 1;
         radius = 35;
@@ -121,9 +131,23 @@ public class Player : MonoBehaviour
             Dash();
             BoostDash();
             Line();
-        }      
+        }
+
+        if (Player.hp <= 0|| Boss.hp <= 0&&isDead==false)
+        {
+            isDead = true;
+        }
+        if (isDead == true&&isChange==false)
+        {
+            GameObject.Find("AwaParents").GetComponent<TestScript>().Fade();
+            isChange = true;
+            isDead = false;
+        }
+
+        BGMChange();
         Texts();
     }
+    
 
     public void Move()
     {
@@ -545,9 +569,31 @@ public class Player : MonoBehaviour
 
     }
 
+    public void BGMChange()
+    {
+        GameObject BGMObj = GameObject.Find("BGMObj");
+        if (isBGM == true)
+        {
+            BGMObj.GetComponent<AudioLowPassFilter>().enabled = true;
+            bgmTimer += Time.deltaTime;
+            if (bgmTimer >= 0.5f)
+            {
+                isBGM = false;
+                bgmTimer = 0;
+            }
+
+        }
+        if (isBGM == false)
+        {
+            BGMObj.GetComponent<AudioLowPassFilter>().enabled = false;
+        }
+    }
+
     void DamageEfect()
     {
-        //bool isSlow = true;
+        
+        
+        
         var sequence = DOTween.Sequence();
         sequence.Append(blackMsk.GetComponent<SpriteRenderer>().DOFade(1, 0.05f).OnComplete(() =>
         {
@@ -577,10 +623,11 @@ public class Player : MonoBehaviour
             if (!isBoostDash)
             {
                 hp -= 10;
-                //DamageEfect();
+                PlayerSlider.value = (float)hp / (float)playerMaxHP;
+                DamageEfect();
+                isBGM = true;
                 timeManager.SlowDown();
                 //Destroy(other.gameObject);
-                DamageEfect();
             }            
         }
 

@@ -23,6 +23,7 @@ public class TestScript : MonoBehaviour
 
     private Animation anim;
 
+    private static bool isCalled = false;
     private static bool isLoad = false;// 自身がすでにロードされているかを判定するフラグ
 
     private void Awake()
@@ -52,45 +53,48 @@ public class TestScript : MonoBehaviour
         transform.position = new Vector3(dontDesCamera.transform.position.x, dontDesCamera.transform.position.y + 1, dontDesCamera.transform.position.z);
 
         transform.rotation = dontDesCamera.transform.rotation;
-
+        isCalled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         #region デバッグ用
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            //Instantiate(Awawa, transform.position,Quaternion.identity);
-            //anim.Play();
-            awa1.Play();
-            awa2.Play();
-            awa3.Play();
+        //if (Input.GetKeyDown(KeyCode.Y))
+        //{
+        //    //Instantiate(Awawa, transform.position,Quaternion.identity);
+        //    //anim.Play();
+        //    awa1.Play();
+        //    awa2.Play();
+        //    awa3.Play();
 
-            //SearchCamera();
+        //    //SearchCamera();
 
-            var sequence = DOTween.Sequence();
-            sequence.AppendInterval(1f);
-            sequence.Append(White.GetComponent<SpriteRenderer>().DOFade(1, 2).OnComplete(() =>
-            {
+        //    var sequence = DOTween.Sequence();
+        //    sequence.AppendInterval(1f);
+        //    sequence.Append(White.GetComponent<SpriteRenderer>().DOFade(1, 2).OnComplete(() =>
+        //    {
 
-                ChangeScene();
+        //        ChangeScene();
 
-                //SearchCamera();
-            }));
+        //        //SearchCamera();
+        //    }));
 
-            sequence.AppendInterval(1f);
-            sequence.Append(White.GetComponent<SpriteRenderer>().DOFade(0, 2));
+        //    sequence.AppendInterval(1f);
+        //    sequence.Append(White.GetComponent<SpriteRenderer>().DOFade(0, 2));
 
 
-            sequence.Play();
-        }
+        //    sequence.Play();
+        //}
         #endregion
+
+        //ボスの体力とプレイヤーの体力を取ってくる
+        
     }
 
     public void Fade()
     {
-        Debug.Log("きたで");
+        
         awa1.Play();
         awa2.Play();
         awa3.Play();
@@ -128,10 +132,44 @@ public class TestScript : MonoBehaviour
         {
             SceneManager.LoadScene("GameScene");
         }
-
+        
         if (SceneManager.GetActiveScene().name == "GameScene")
+        {
+            if (Player.hp == 0|| Boss.hp == 0)
+            {
+                
+                if (isCalled == true)
+                {
+                    if (Player.hp<= 0)
+                    {
+                        SceneManager.LoadScene("GameOverScene");
+                    }
+
+                    if (Boss.hp <= 0)
+                    {
+                        SceneManager.LoadScene("ClearScene");
+                    }
+                    isCalled = false;
+                }
+            }
+            //if (Player.hp == 0)
+            //{
+            //    SceneManager.LoadScene("GameOverScene");
+            //}
+
+                //if (Boss.hp == 0)
+                //{
+                //    SceneManager.LoadScene("ClearScene");
+                //}
+        }
+        if (SceneManager.GetActiveScene().name == "ClearScene")
         {
             SceneManager.LoadScene("TitleScene");
         }
+        if (SceneManager.GetActiveScene().name == "GameOverScene")
+        {
+            SceneManager.LoadScene("TitleScene");
+        }
+
     }
 }

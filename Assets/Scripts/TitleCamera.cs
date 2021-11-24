@@ -94,7 +94,6 @@ public class TitleCamera : MonoBehaviour
     {
         if (isPad == true)
         {
-            Debug.Log("いきます");
             isTextMove = false;
             //float ver = Input.GetAxis("Vertical");
             if (Input.GetAxis("Vertical") < 0)
