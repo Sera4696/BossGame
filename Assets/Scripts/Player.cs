@@ -134,6 +134,37 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
+
+    private void Update()
+    {
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 1")) && !isDash && !isBoostDash)// && points[0] != null)
+        {
+            Ins();
+            dashNowPosition = dashPosition.position;   //ボタンを押した瞬間にダッシュ先の位置を代入する
+            isDash = true;
+            isMove = false;
+            isBoostDash = false;
+            audioSource.PlayOneShot(tackle);
+            audioSource.pitch += 0.5f;
+
+            var sequence = DOTween.Sequence();
+            sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(2.5f, 2.5f, 1f), 0.3f)).SetEase(Ease.OutQuart);
+            sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(1.5f, 1.5f, 2f), 0.3f)).SetEase(Ease.OutQuart);
+            sequence.Play();
+
+        }
+
+        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0")) && !isBoostDash && !isDash && points[0] != null)
+        {
+            isBoostDash = true;
+            isMove = false;
+            isDash = false;
+            trailRenderer.enabled = true;
+            audioSource.pitch = 1;
+        }
+    }
+
+
     void FixedUpdate()
     {
         startTimer++;
@@ -223,22 +254,7 @@ public class Player : MonoBehaviour
     void Dash()
     {
         //ダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中なら
-        if ((Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown("joystick button 1")) && !isDash && !isBoostDash)// && points[0] != null)
-        {
-            Ins();
-            dashNowPosition = dashPosition.position;   //ボタンを押した瞬間にダッシュ先の位置を代入する
-            isDash = true;　　　　　　　　　　　　　　 
-            isMove = false;
-            isBoostDash = false;
-            audioSource.PlayOneShot(tackle);
-            audioSource.pitch += 0.5f;
-
-            var sequence = DOTween.Sequence();
-            sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(2.5f, 2.5f, 1f), 0.3f)).SetEase(Ease.OutQuart);
-            sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(1.5f, 1.5f, 2f), 0.3f)).SetEase(Ease.OutQuart);
-            sequence.Play();
-
-        }
+        
 
         if (isDash == true)
         {
@@ -287,14 +303,7 @@ public class Player : MonoBehaviour
     void BoostDash()
     {
         //スーパーダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中でないかつポイントがnullでないなら
-        if((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0"))  && !isBoostDash && !isDash && points[0] != null)
-        {
-            isBoostDash = true;
-            isMove = false;
-            isDash = false;
-            trailRenderer.enabled = true;
-            audioSource.pitch = 1;
-        }
+       
 
         
 
