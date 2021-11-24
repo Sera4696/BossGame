@@ -487,7 +487,7 @@ public class Boss : MonoBehaviour
 
         if (defenceCount == 4)
         {
-            defence = 20;
+            defence = 4;
             bossAttack = 0;
             attackCount = 0;
             defenceCount = 0;
