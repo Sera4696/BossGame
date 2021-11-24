@@ -71,6 +71,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Slider PlayerSlider;
     private int playerMaxHP;
 
+    int DCount;
+    bool isMMM;
+
     //シーン関係
     private bool isDead = false,isChange=false;
     //[SerializeField] private GameObject[] points;
@@ -79,7 +82,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         hp = 100;
-        attack = 30;
+        attack = 40;
        //BossSlider.value = 1;
         PlayerSlider.value = 1;
         playerMaxHP = hp;
@@ -104,6 +107,9 @@ public class Player : MonoBehaviour
         //bossScr = boss.GetComponent<Boss>();
 
         pointCount = 0;
+
+        DCount = 0;
+        isMMM = false;
 
         //カメラ
         mainCamera = GameObject.Find("Main Camera");
@@ -159,21 +165,21 @@ public class Player : MonoBehaviour
             //周期の値の増減
             if (hori < 0)
             {
-                aroundTime += 0.005f;
+                aroundTime += 0.02f;
             }
             if (hori > 0)
             {
-                aroundTime += -0.005f;
+                aroundTime += -0.02f;
             }
 
             if (Input.GetKey(KeyCode.A))
             {
-                aroundTime += 0.005f;
+                aroundTime += 0.02f;
             }
 
             else if (Input.GetKey(KeyCode.D))
             {
-                aroundTime += -0.005f;
+                aroundTime += -0.02f;
             }
 
             //補正の式
@@ -576,7 +582,7 @@ public class Player : MonoBehaviour
         {
             BGMObj.GetComponent<AudioLowPassFilter>().enabled = true;
             bgmTimer += Time.deltaTime;
-            if (bgmTimer >= 0.5f)
+            if (bgmTimer >= 0.8f)
             {
                 isBGM = false;
                 bgmTimer = 0;
@@ -591,9 +597,7 @@ public class Player : MonoBehaviour
 
     void DamageEfect()
     {
-        
-        
-        
+                        
         var sequence = DOTween.Sequence();
         sequence.Append(blackMsk.GetComponent<SpriteRenderer>().DOFade(1, 0.05f).OnComplete(() =>
         {
@@ -620,7 +624,7 @@ public class Player : MonoBehaviour
     {
         if(other.gameObject.tag == "Shot")
         {
-            if (!isBoostDash)
+            if (!isBoostDash && !isBGM)
             {
                 hp -= 10;
                 PlayerSlider.value = (float)hp / (float)playerMaxHP;
