@@ -68,6 +68,9 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject damageParticle;
     [SerializeField] private GameObject blackMsk;
 
+    [SerializeField] private GameObject Orca;
+    [SerializeField] private GameObject[] Dtarget;
+
     //体力関係
     //[SerializeField] private Slider BossSlider;
     [SerializeField] private Slider PlayerSlider;
@@ -87,7 +90,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         hp = 100;
-        attack = 40;
+        attack = 35;
       
         PlayerSlider.value = 1;
         playerMaxHP = hp;
@@ -131,7 +134,7 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         startTimer++;
         //Ins();
@@ -171,10 +174,12 @@ public class Player : MonoBehaviour
             if (hori < 0)
             {
                 aroundTime += 0.02f;
+                Orca.transform.LookAt(Dtarget[1].transform.position);
             }
             if (hori > 0)
             {
                 aroundTime += -0.02f;
+                Orca.transform.LookAt(Dtarget[2].transform.position);
             }
 
             if (Input.GetKey(KeyCode.A))
@@ -365,6 +370,7 @@ public class Player : MonoBehaviour
     void Look()
     {
         transform.LookAt(targetObject.transform);
+        Orca.transform.rotation = transform.rotation;
         //var aim = targetObject.transform.position - transform.position;
         //var look = Quaternion.LookRotation(aim);
         //transform.localRotation = look;
@@ -587,7 +593,7 @@ public class Player : MonoBehaviour
         {
             BGMObj.GetComponent<AudioLowPassFilter>().enabled = true;
             bgmTimer += Time.deltaTime;
-            if (bgmTimer >= 0.8f)
+            if (bgmTimer >= 1.5f)
             {
                 isBGM = false;
                 bgmTimer = 0;

@@ -96,7 +96,7 @@ public class Boss : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         startTimer++;
         BossAttack();
@@ -155,12 +155,12 @@ public class Boss : MonoBehaviour
 
             if (hp >= 4000)
             {
-                if (attackCount > 450 && attackCount < 500)
+                if (attackCount > 350 && attackCount < 400)
                 {
                     transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
                 }
 
-                if (attackCount == 500.0f)
+                if (attackCount == 400.0f)
                 {
                     bossAttack = 1;
                     //度の攻撃かをランダムで選ぶ
@@ -174,12 +174,12 @@ public class Boss : MonoBehaviour
                 area = 4;
                 minSpeed = -0.06f;
                 maxSpeed = 0.06f;
-                if (attackCount > 400 && attackCount < 450)
+                if (attackCount > 300 && attackCount < 350)
                 {
                     transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
                 }
 
-                if (attackCount == 450.0f)
+                if (attackCount == 350.0f)
                 {
                     //bossAttack = 5;
                     //度の攻撃かをランダムで選ぶ
@@ -193,12 +193,12 @@ public class Boss : MonoBehaviour
                 area = 6;
                 minSpeed = -0.09f;
                 maxSpeed = 0.09f;
-                if (attackCount > 350 && attackCount < 400)
+                if (attackCount > 250 && attackCount < 300)
                 {
                     transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
                 }
 
-                if (attackCount == 400.0f)
+                if (attackCount == 300.0f)
                 {
                     //bossAttack = 5;
                     //度の攻撃かをランダムで選ぶ
@@ -212,12 +212,12 @@ public class Boss : MonoBehaviour
                 area = 8;
                 minSpeed = -0.12f;
                 maxSpeed = 0.12f;
-                if (attackCount > 250 && attackCount < 300)
+                if (attackCount > 150 && attackCount < 200)
                 {
                     transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
                 }
 
-                if (attackCount == 300.0f)
+                if (attackCount == 200.0f)
                 {
                     //bossAttack = 5;
                     //度の攻撃かをランダムで選ぶ
@@ -231,12 +231,12 @@ public class Boss : MonoBehaviour
                 area = 10;
                 minSpeed = -0.15f;
                 maxSpeed = 0.15f;
-                if (attackCount > 200 && attackCount < 250)
+                if (attackCount > 100 && attackCount < 150)
                 {
                     transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
                 }
 
-                if (attackCount == 250.0f)
+                if (attackCount == 150.0f)
                 {
                     //bossAttack = 5;
                     //度の攻撃かをランダムで選ぶ
@@ -291,25 +291,25 @@ public class Boss : MonoBehaviour
                 shotAttackCount++;
             }
 
-            if (shotCount == 31)
+            if (shotCount == 41)
             {
                 shotObjects[1] = Instantiate(insShot, transform.position, Quaternion.identity);
                 shotAttackCount++;
             }
 
-            if (shotCount == 61)
+            if (shotCount == 81)
             {
                 shotObjects[2] = Instantiate(insShot, transform.position, Quaternion.identity);
                 shotAttackCount++;
             }
 
-            if (shotCount == 91)
+            if (shotCount == 121)
             {
                 shotObjects[3] = Instantiate(insShot, transform.position, Quaternion.identity);
                 shotAttackCount++;
             }
 
-            if (shotCount == 121)
+            if (shotCount == 161)
             {
                 shotObjects[4] = Instantiate(insShot, transform.position, Quaternion.identity);
                 shotAttackCount++;
@@ -319,31 +319,31 @@ public class Boss : MonoBehaviour
 
         if (shotObjects[0] != null)
         {
-            shotObjects[0].transform.position += transform.forward * 0.5f;
+            shotObjects[0].transform.position += transform.forward * 0.7f;
             shotTimer++;
         }
 
         if (shotObjects[1] != null)
         {
-            shotObjects[1].transform.position += transform.forward * 0.5f;
+            shotObjects[1].transform.position += transform.forward * 0.7f;
         }
 
         if (shotObjects[2] != null)
         {
-            shotObjects[2].transform.position += transform.forward * 0.5f;
+            shotObjects[2].transform.position += transform.forward * 0.7f;
         }
 
         if (shotObjects[3] != null)
         {
-            shotObjects[3].transform.position += transform.forward * 0.5f;
+            shotObjects[3].transform.position += transform.forward * 0.7f;
         }
 
         if (shotObjects[4] != null)
         {
-            shotObjects[4].transform.position += transform.forward * 0.5f;
+            shotObjects[4].transform.position += transform.forward * 0.7f;
         }
 
-        if (shotTimer > 250)
+        if (shotTimer > 220)
         {
             Destroy(shotObjects[0]);
             Destroy(shotObjects[1]);
@@ -380,30 +380,30 @@ public class Boss : MonoBehaviour
 
         if (shotObjects[0] != null)
         {
-            shotObjects[0].transform.position += shotObjects[0].transform.forward * 0.4f;           
+            shotObjects[0].transform.position += shotObjects[0].transform.forward * 0.5f;           
         }
 
         if (shotObjects[1] != null)
         {
-            shotObjects[1].transform.position += shotObjects[1].transform.forward * 0.4f;
+            shotObjects[1].transform.position += shotObjects[1].transform.forward * 0.5f;
         }
 
         if (shotObjects[2] != null)
         {
-            shotObjects[2].transform.position += shotObjects[2].transform.forward * 0.4f;
+            shotObjects[2].transform.position += shotObjects[2].transform.forward * 0.5f;
         }
 
         if (shotObjects[3] != null)
         {
-            shotObjects[3].transform.position += shotObjects[3].transform.forward * 0.4f;
+            shotObjects[3].transform.position += shotObjects[3].transform.forward * 0.5f;
         }
 
         if (shotObjects[4] != null)
         {
-            shotObjects[4].transform.position += shotObjects[4].transform.forward * 0.4f;
+            shotObjects[4].transform.position += shotObjects[4].transform.forward * 0.5f;
         }
 
-        if (shotTimer > 400)
+        if (shotTimer > 300)
         {
             Destroy(shotObjects[0]);
             Destroy(shotObjects[1]);
@@ -448,11 +448,11 @@ public class Boss : MonoBehaviour
             nowAttackY[1].transform.localScale += new Vector3(0, 5.0f, 0);
             nowAttackY[2].transform.localScale += new Vector3(0, 5.0f, 0);
 
-            if(nowAttackY[0].transform.localScale.y > 150)
+            if(nowAttackY[0].transform.localScale.y > 170)
             {
-                nowAttack[0].transform.position += new Vector3(0, -1.2f, 0);
-                nowAttack[1].transform.position += new Vector3(0, -1.2f, 0);
-                nowAttack[2].transform.position += new Vector3(0, -1.2f, 0);
+                nowAttack[0].transform.position += new Vector3(0, -1.4f, 0);
+                nowAttack[1].transform.position += new Vector3(0, -1.4f, 0);
+                nowAttack[2].transform.position += new Vector3(0, -1.4f, 0);
             }           
         }
 
@@ -528,13 +528,13 @@ public class Boss : MonoBehaviour
 
         if(nowRoop[0] != null)
         {
-            aroundTime += 0.007f;
+            aroundTime += 0.009f;
             nowRoop[0].transform.position = NR1;
         }
 
         if (nowRoop[1] != null)
         {
-            aroundTime2 += 0.007f;
+            aroundTime2 += 0.009f;
             nowRoop[1].transform.position = NR2;
         }
 
