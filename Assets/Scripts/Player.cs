@@ -68,6 +68,9 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject damageParticle;
     [SerializeField] private GameObject blackMsk;
 
+    [SerializeField] private GameObject Orca;
+    [SerializeField] private GameObject[] Dtarget;
+
     //体力関係
     //[SerializeField] private Slider BossSlider;
     [SerializeField] private Slider PlayerSlider;
@@ -87,7 +90,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         hp = 100;
-        attack = 40;
+        attack = 35;
       
         PlayerSlider.value = 1;
         playerMaxHP = hp;
@@ -131,7 +134,38 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+
+    private void Update()
+    {
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 1")) && !isDash && !isBoostDash)// && points[0] != null)
+        {
+            Ins();
+            dashNowPosition = dashPosition.position;   //ボタンを押した瞬間にダッシュ先の位置を代入する
+            isDash = true;
+            isMove = false;
+            isBoostDash = false;
+            audioSource.PlayOneShot(tackle);
+            audioSource.pitch += 0.5f;
+
+            var sequence = DOTween.Sequence();
+            sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(2.5f, 2.5f, 1f), 0.3f)).SetEase(Ease.OutQuart);
+            sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(1.5f, 1.5f, 2f), 0.3f)).SetEase(Ease.OutQuart);
+            sequence.Play();
+
+        }
+
+        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0")) && !isBoostDash && !isDash && points[0] != null)
+        {
+            isBoostDash = true;
+            isMove = false;
+            isDash = false;
+            trailRenderer.enabled = true;
+            audioSource.pitch = 1;
+        }
+    }
+
+
+    void FixedUpdate()
     {
         startTimer++;
         //Ins();
@@ -171,10 +205,12 @@ public class Player : MonoBehaviour
             if (hori < 0)
             {
                 aroundTime += 0.02f;
+                Orca.transform.LookAt(Dtarget[1].transform.position);
             }
             if (hori > 0)
             {
                 aroundTime += -0.02f;
+                Orca.transform.LookAt(Dtarget[2].transform.position);
             }
 
             if (Input.GetKey(KeyCode.A))
@@ -218,22 +254,7 @@ public class Player : MonoBehaviour
     void Dash()
     {
         //ダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中なら
-        if ((Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown("joystick button 1")) && !isDash && !isBoostDash)// && points[0] != null)
-        {
-            Ins();
-            dashNowPosition = dashPosition.position;   //ボタンを押した瞬間にダッシュ先の位置を代入する
-            isDash = true;　　　　　　　　　　　　　　 
-            isMove = false;
-            isBoostDash = false;
-            audioSource.PlayOneShot(tackle);
-            audioSource.pitch += 0.5f;
-
-            var sequence = DOTween.Sequence();
-            sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(2.5f, 2.5f, 1f), 0.3f)).SetEase(Ease.OutQuart);
-            sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(1.5f, 1.5f, 2f), 0.3f)).SetEase(Ease.OutQuart);
-            sequence.Play();
-
-        }
+        
 
         if (isDash == true)
         {
@@ -282,6 +303,7 @@ public class Player : MonoBehaviour
     void BoostDash()
     {
         //スーパーダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中でないかつポイントがnullでないなら
+<<<<<<< HEAD
         if((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0"))  && !isBoostDash && !isDash && points[0] != null)
         {
             isBoostDash = true;
@@ -291,6 +313,9 @@ public class Player : MonoBehaviour
             audioSource.pitch = 1;
             audioSource.PlayOneShot(tackle);
         }
+=======
+       
+>>>>>>> origin/last2_Yasu
 
         
 
@@ -367,6 +392,7 @@ public class Player : MonoBehaviour
     void Look()
     {
         transform.LookAt(targetObject.transform);
+        Orca.transform.rotation = transform.rotation;
         //var aim = targetObject.transform.position - transform.position;
         //var look = Quaternion.LookRotation(aim);
         //transform.localRotation = look;
@@ -589,7 +615,7 @@ public class Player : MonoBehaviour
         {
             BGMObj.GetComponent<AudioLowPassFilter>().enabled = true;
             bgmTimer += Time.deltaTime;
-            if (bgmTimer >= 0.8f)
+            if (bgmTimer >= 1.5f)
             {
                 isBGM = false;
                 bgmTimer = 0;
