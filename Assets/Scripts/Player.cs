@@ -169,7 +169,7 @@ public class Player : MonoBehaviour
     void Dash()
     {
         //ダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中なら
-        if (Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown("joystick button 1") && !isDash && !isBoostDash)// && points[0] != null)
+        if ((Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown("joystick button 1")) && !isDash && !isBoostDash)// && points[0] != null)
         {
             Ins();
             dashNowPosition = dashPosition.position;   //ボタンを押した瞬間にダッシュ先の位置を代入する
@@ -185,6 +185,7 @@ public class Player : MonoBehaviour
         if (isDash == true)
         {
             isBoostDash = false;
+            isMove = false;
             
             //ダッシュスピードカウントを決まった値分増加させる
             dashSpeedCount += dashSpeed / 10;
@@ -221,7 +222,7 @@ public class Player : MonoBehaviour
     void BoostDash()
     {
         //スーパーダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中でないかつポイントがnullでないなら
-        if(Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0")  && !isBoostDash && !isDash && points[0] != null)
+        if((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0"))  && !isBoostDash && !isDash && points[0] != null)
         {
             isBoostDash = true;
             isMove = false;
@@ -232,7 +233,7 @@ public class Player : MonoBehaviour
 
         
 
-        if(isBoostDash==true)
+        if(isBoostDash == true)
         {
             isDash = false;
             mainCamera.SetActive(false);
@@ -260,7 +261,7 @@ public class Player : MonoBehaviour
             }
 
             //目標ポイントが終点まで行きついたなら
-            if (transform.position == points[0].transform.position)
+            if (transform.position == points[0].transform.position && points[pointCount] == points[0])
             {
                 pointCount = 0;
                 dashSpeed = 0.02f;

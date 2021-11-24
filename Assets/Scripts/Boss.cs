@@ -86,18 +86,60 @@ public class Boss : MonoBehaviour
                 transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
             }
 
-            if (attackCount == 600.0f)
+            if (hp <= 5000 && hp > 4000)
             {
-                //bossAttack = 5;
-                //度の攻撃かをランダムで選ぶ
-                transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
-
-                if(hp < 4000)
+                if (attackCount == 600.0f)
                 {
-
+                    bossAttack = 1;
+                    //度の攻撃かをランダムで選ぶ
+                    transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
+                    //bossAttack = Random.Range(1, 5);
                 }
+            }
 
-                bossAttack = Random.Range(1, 5);
+
+            if (hp <= 4000 && hp > 3000)
+            {
+                if (attackCount == 600.0f)
+                {
+                    //bossAttack = 5;
+                    //度の攻撃かをランダムで選ぶ
+                    transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
+                    bossAttack = Random.Range(1, 2);
+                }
+            }
+
+            if (hp <= 3000 && hp > 2000)
+            {
+                if (attackCount == 500.0f)
+                {
+                    //bossAttack = 5;
+                    //度の攻撃かをランダムで選ぶ
+                    transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
+                    bossAttack = Random.Range(1, 3);
+                }
+            }
+
+            if (hp <= 2000 && hp > 1000)
+            {
+                if (attackCount == 450.0f)
+                {
+                    //bossAttack = 5;
+                    //度の攻撃かをランダムで選ぶ
+                    transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
+                    bossAttack = Random.Range(1, 4);
+                }
+            }
+
+            if (hp <= 1000)
+            {
+                if (attackCount == 400.0f)
+                {
+                    //bossAttack = 5;
+                    //度の攻撃かをランダムで選ぶ
+                    transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
+                    bossAttack = Random.Range(1, 5);
+                }
             }
 
             if (bossAttack == 1)
@@ -124,9 +166,7 @@ public class Boss : MonoBehaviour
             {                
                 AroundShot();
             }
-        }
-
-        
+        }      
     }
 
     void Shot()
@@ -147,25 +187,25 @@ public class Boss : MonoBehaviour
                 shotAttackCount++;
             }
 
-            if (shotCount == 21)
+            if (shotCount == 31)
             {
                 shotObjects[1] = Instantiate(insShot, transform.position, Quaternion.identity);
                 shotAttackCount++;
             }
 
-            if (shotCount == 41)
+            if (shotCount == 61)
             {
                 shotObjects[2] = Instantiate(insShot, transform.position, Quaternion.identity);
                 shotAttackCount++;
             }
 
-            if (shotCount == 61)
+            if (shotCount == 91)
             {
                 shotObjects[3] = Instantiate(insShot, transform.position, Quaternion.identity);
                 shotAttackCount++;
             }
 
-            if (shotCount == 81)
+            if (shotCount == 121)
             {
                 shotObjects[4] = Instantiate(insShot, transform.position, Quaternion.identity);
                 shotAttackCount++;
@@ -175,31 +215,31 @@ public class Boss : MonoBehaviour
 
         if (shotObjects[0] != null)
         {
-            shotObjects[0].transform.position += transform.forward * 0.3f;
+            shotObjects[0].transform.position += transform.forward * 0.4f;
             shotTimer++;
         }
 
         if (shotObjects[1] != null)
         {
-            shotObjects[1].transform.position += transform.forward * 0.3f;
+            shotObjects[1].transform.position += transform.forward * 0.4f;
         }
 
         if (shotObjects[2] != null)
         {
-            shotObjects[2].transform.position += transform.forward * 0.3f;
+            shotObjects[2].transform.position += transform.forward * 0.4f;
         }
 
         if (shotObjects[3] != null)
         {
-            shotObjects[3].transform.position += transform.forward * 0.3f;
+            shotObjects[3].transform.position += transform.forward * 0.4f;
         }
 
         if (shotObjects[4] != null)
         {
-            shotObjects[4].transform.position += transform.forward * 0.3f;
+            shotObjects[4].transform.position += transform.forward * 0.4f;
         }
 
-        if (shotTimer > 500)
+        if (shotTimer > 300)
         {
             Destroy(shotObjects[0]);
             Destroy(shotObjects[1]);
