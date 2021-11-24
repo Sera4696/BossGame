@@ -31,9 +31,16 @@ public class TitleCamera : MonoBehaviour
     [SerializeField] private GameObject Ring_Up;
     [SerializeField] private GameObject Ring_Down;
 
+    //音関係
+    [SerializeField] private AudioClip kettei;
+    [SerializeField] private AudioClip sentaku;
+    private AudioSource audioSource;
+    private bool isSoundSentaku = false,isAfterSentaku=false;
+
     private void Start()
     {
         TitleTextObj.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -68,6 +75,7 @@ public class TitleCamera : MonoBehaviour
         if(isTitle == true && isTextMove == true)
         {
             GameStartText.transform.DOLocalMove(GameStartTexPos, 1f).SetEase(Ease.OutQuart);
+            
             EndText.transform.DOLocalMove(EndTexPos, 0.5f).SetEase(Ease.OutQuart);
             isPad = true;
 
@@ -86,13 +94,18 @@ public class TitleCamera : MonoBehaviour
             if (isCoice == true)
             {
                 //GameStartText.transform.DOLocalMove(GameStartTexPos, 1f).SetEase(Ease.OutQuart);
-                GameStartText.transform.DOLocalMoveX(GameStartTexPos.x - 50, 0.5f).SetEase(Ease.OutQuart);
-                EndText.transform.DOLocalMoveX(EndTexPos.x, 0.5f).SetEase(Ease.OutQuart);
+                //GameStartText.transform.DOLocalMoveX(GameStartTexPos.x - 50, 0.5f).SetEase(Ease.OutQuart);
+                GameStartText.transform.DOLocalMoveX(330, 0.5f).SetEase(Ease.OutQuart);
+                EndText.transform.DOLocalMoveX(-14, 0.5f).SetEase(Ease.OutQuart);
+                //EndText.transform.DOLocalMoveX(EndTexPos.x, 0.5f).SetEase(Ease.OutQuart);
                
             }
             if (isCoice == false)
             {
-                EndText.transform.DOLocalMoveX(EndTexPos.x - 50, 0.5f).SetEase(Ease.OutQuart);
+                //EndText.transform.DOLocalMoveX(EndTexPos.x - 50, 0.5f).SetEase(Ease.OutQuart);
+                EndText.transform.DOLocalMoveX(-64, 0.5f).SetEase(Ease.OutQuart);
+
+                GameStartText.transform.DOLocalMoveX(380, 0.5f).SetEase(Ease.OutQuart);
                 GameStartText.transform.DOLocalMoveX(GameStartTexPos.x, 0.5f).SetEase(Ease.OutQuart);
                
             }
@@ -102,28 +115,45 @@ public class TitleCamera : MonoBehaviour
     {
         if (isPad == true)
         {
+            isAfterSentaku = isSoundSentaku;
             isTextMove = false;
             //float ver = Input.GetAxis("Vertical");
             if (Input.GetAxis("Vertical") < 0)
             {
+                isSoundSentaku = false;
                 isCoice = false;
             }
             if (Input.GetAxis("Vertical") > 0)
             {
+                isSoundSentaku = true;
                 isCoice = true;
             }
+
+            //if (Input.GetAxis("Vertical") == 0)
+            //{
+            //    isSoundSentaku = false;
+            //}
+            if (isSoundSentaku == true && isAfterSentaku == false || isSoundSentaku == false && isAfterSentaku == true)
+            {
+                audioSource.PlayOneShot(sentaku);
+            }
+
             if (isCoice == true)
             {
+                
                 if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown("joystick button 0"))
                 {
+                    audioSource.PlayOneShot(kettei);
                     //これをコピペすればフェードが動きます
                     GameObject.Find("AwaParents").GetComponent<TestScript>().Fade();
                 }
             }
             if (isCoice == false)
             {
+                //audioSource.PlayOneShot(sentaku);
                 if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown("joystick button 0"))
                 {
+                    audioSource.PlayOneShot(kettei);
                     UnityEngine.Application.Quit();
                     UnityEditor.EditorApplication.isPlaying = false;
                 }

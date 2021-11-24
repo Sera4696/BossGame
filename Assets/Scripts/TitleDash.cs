@@ -44,6 +44,10 @@ public class TitleDash : MonoBehaviour
     [SerializeField] private GameObject titleCameraObj;
     private TitleCamera titleCamera;
 
+    //音関係
+    [SerializeField] private AudioClip kettei;
+    private AudioSource audioSource;
+
     //[SerializeField] private GameObject[] points;
 
     // Start is called before the first frame update
@@ -79,6 +83,8 @@ public class TitleDash : MonoBehaviour
 
         //カメラ
         titleCamera = titleCameraObj.GetComponent<TitleCamera>();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -98,6 +104,7 @@ public class TitleDash : MonoBehaviour
          //スーパーダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中でないかつポイントがnullでないなら
         if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0")) && !isBoostDash && !isDash && points[0] != null)
         {
+            audioSource.PlayOneShot(kettei);
             isBoostDash = true;
             isMove = false;
         }

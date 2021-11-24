@@ -135,7 +135,7 @@ public class TestScript : MonoBehaviour
         
         if (SceneManager.GetActiveScene().name == "GameScene")
         {
-            if (Player.hp == 0|| Boss.hp == 0)
+            if (Player.hp <= 0|| Boss.hp <= 0)
             {
                 
                 if (isCalled == true)

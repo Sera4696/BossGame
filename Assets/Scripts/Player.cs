@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
 
     //音関連
     [SerializeField] private AudioClip tackle;
+    [SerializeField] private AudioClip BossAttack;
     private AudioSource audioSource;
 
     //子供関係
@@ -73,6 +74,8 @@ public class Player : MonoBehaviour
 
     //シーン関係
     private bool isDead = false,isChange=false;
+    
+
     //[SerializeField] private GameObject[] points;
 
     // Start is called before the first frame update
@@ -634,6 +637,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "Boss")
         {
             Boss.hp -= attack / Boss.defence;
+            audioSource.PlayOneShot(BossAttack);
         }
 
         if (other.gameObject.tag == "Defence")
