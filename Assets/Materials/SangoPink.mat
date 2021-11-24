@@ -20,11 +20,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
-    - _ambient: 0.885
+    - _ambient: 0.13
     - _blue: 0.322
     - _green: 0.608
-    - _light: 484
+    - _light: 0
     - _red: 0.206
-    - _specular: 689
+    - _specular: 200
     m_Colors:
-    - _Color: {r: 1, g: 0.5330188, b: 0.6953032, a: 1}
+    - _Color: {r: 1, g: 0.5235849, b: 0.6887933, a: 1}

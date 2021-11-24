@@ -126,10 +126,10 @@ public class TestScript : MonoBehaviour
         //ここで飛ぶ先のシーンを弄れるよ
         if (SceneManager.GetActiveScene().name == "TitleScene")
         {
-            SceneManager.LoadScene("NozaScene");
+            SceneManager.LoadScene("GameScene");
         }
 
-        if (SceneManager.GetActiveScene().name == "NozaScene")
+        if (SceneManager.GetActiveScene().name == "GameScene")
         {
             SceneManager.LoadScene("TitleScene");
         }
