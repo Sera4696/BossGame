@@ -521,13 +521,13 @@ public class Player : MonoBehaviour
         {
             if (!isBoostDash)
             {
-                hp -= 10;
+                hp -= attack;
             }            
         }
 
         if (other.gameObject.tag == "Boss")
         {
-            Boss.hp -= attack - Boss.defence;
+            Boss.hp -= attack / Boss.defence;
         }
 
         if (other.gameObject.tag == "Defence")
