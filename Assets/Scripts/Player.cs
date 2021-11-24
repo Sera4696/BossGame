@@ -633,12 +633,12 @@ public class Player : MonoBehaviour
 
         if (other.gameObject.tag == "Boss")
         {
-            Boss.hp -= attack - Boss.defence;
+            Boss.hp -= attack / Boss.defence;
         }
 
         if (other.gameObject.tag == "Defence")
         {
-            Boss.defence -= 5;
+            Boss.defence -= 1;
             Destroy(other.gameObject);
         }
     }

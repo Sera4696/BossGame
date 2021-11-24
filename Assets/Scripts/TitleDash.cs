@@ -96,7 +96,7 @@ public class TitleDash : MonoBehaviour
         //Dash();
         Line();
          //スーパーダッシュボタンが押されダッシュ中でないかつスーパーダッシュ中でないかつポイントがnullでないなら
-        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0") && !isBoostDash && !isDash && points[0] != null)
+        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0")) && !isBoostDash && !isDash && points[0] != null)
         {
             isBoostDash = true;
             isMove = false;

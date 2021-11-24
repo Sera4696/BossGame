@@ -23,10 +23,12 @@ public class Boss : MonoBehaviour
     public Quaternion rotation = Quaternion.identity;
 
     [SerializeField] private GameObject[] attackPoints;          //
-    [SerializeField] private GameObject[] nowAttack;             //
+    [SerializeField] private GameObject[] nowAttack;
+    [SerializeField] private GameObject[] nowAttackY;//
     [SerializeField] private int downAttack;                     //
     [SerializeField] private int downAttackCount;                //
     [SerializeField] private GameObject insDown;                 //
+    [SerializeField] private GameObject insDownY;
 
     [SerializeField] private GameObject[] defenceObjects;
     [SerializeField] private GameObject[] nowDefence;
@@ -46,6 +48,18 @@ public class Boss : MonoBehaviour
     [SerializeField] public GameObject HP_Object;
     [SerializeField] public GameObject D_Object;
 
+    [SerializeField] private int reverse_x;
+    [SerializeField] private int reverse_y;
+    [SerializeField] private int reverse_z;
+    public float x;
+    public float y;
+    public float z;
+
+    [SerializeField] public float minSpeed;
+    [SerializeField] public float maxSpeed;
+    [SerializeField] public float area;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +72,18 @@ public class Boss : MonoBehaviour
         radius = 35;
 
         startTimer = 0;
+
+        reverse_x = 1;
+        reverse_y = 1;
+        reverse_z = 1;
+
+        minSpeed = -0.03f;
+        maxSpeed = 0.03f;
+
+        x = Random.Range(minSpeed, maxSpeed);
+        y = Random.Range(minSpeed, maxSpeed);
+        z = Random.Range(minSpeed, maxSpeed);
+        area = 2;
     }
 
     // Update is called once per frame
@@ -67,6 +93,34 @@ public class Boss : MonoBehaviour
         BossAttack();
         Look();
         Texts();
+
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            hp -= 100;
+        }
+    }
+
+    private void Move()
+    {
+        transform.position += new Vector3(x * reverse_x, y * reverse_y, z * reverse_z);
+
+        if (transform.position.x < -area || transform.position.x > area)
+        {
+            reverse_x *= -1;
+            x = Random.Range(minSpeed, maxSpeed);
+        }
+
+        if (transform.position.y < -area || transform.position.y > area)
+        {
+            reverse_y *= -1;
+            y = Random.Range(minSpeed, maxSpeed);
+        }
+
+        if (transform.position.z < -area || transform.position.z > area)
+        {
+            reverse_z *= -1;
+            z = Random.Range(minSpeed, maxSpeed);
+        }
     }
 
     void Look()
@@ -79,15 +133,24 @@ public class Boss : MonoBehaviour
         
         if (startTimer >  300)
         {
+            startTimer = 350;
+            Move();
             attackCount++;
             //攻撃が始まるまでのカウント
-            if (attackCount > 500 && attackCount < 600)
-            {
-                transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
-            }
 
-            if (hp <= 5000 && hp > 4000)
+            if (bossAttack == 0 && attackCount > 600)
             {
+                attackCount = 0;
+            }
+           
+
+            if (hp >= 4000)
+            {
+                if (attackCount > 500 && attackCount < 600)
+                {
+                    transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
+                }
+
                 if (attackCount == 600.0f)
                 {
                     bossAttack = 1;
@@ -97,21 +160,17 @@ public class Boss : MonoBehaviour
                 }
             }
 
-
-            if (hp <= 4000 && hp > 3000)
+            if (hp < 4000 && hp >= 3000)
             {
-                if (attackCount == 600.0f)
+                area = 4;
+                minSpeed = -0.06f;
+                maxSpeed = 0.06f;
+                if (attackCount > 500 && attackCount < 600)
                 {
-                    //bossAttack = 5;
-                    //度の攻撃かをランダムで選ぶ
-                    transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
-                    bossAttack = Random.Range(1, 2);
+                    transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
                 }
-            }
 
-            if (hp <= 3000 && hp > 2000)
-            {
-                if (attackCount == 500.0f)
+                if (attackCount == 600.0f)
                 {
                     //bossAttack = 5;
                     //度の攻撃かをランダムで選ぶ
@@ -120,9 +179,17 @@ public class Boss : MonoBehaviour
                 }
             }
 
-            if (hp <= 2000 && hp > 1000)
+            if (hp < 3000 && hp >= 2000)
             {
-                if (attackCount == 450.0f)
+                area = 6;
+                minSpeed = -0.09f;
+                maxSpeed = 0.09f;
+                if (attackCount > 400 && attackCount < 500)
+                {
+                    transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
+                }
+
+                if (attackCount == 500.0f)
                 {
                     //bossAttack = 5;
                     //度の攻撃かをランダムで選ぶ
@@ -131,14 +198,41 @@ public class Boss : MonoBehaviour
                 }
             }
 
-            if (hp <= 1000)
+            if (hp < 2000 && hp >= 1000)
             {
-                if (attackCount == 400.0f)
+                area = 8;
+                minSpeed = -0.12f;
+                maxSpeed = 0.12f;
+                if (attackCount > 350 && attackCount < 450)
+                {
+                    transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
+                }
+
+                if (attackCount == 450.0f)
                 {
                     //bossAttack = 5;
                     //度の攻撃かをランダムで選ぶ
                     transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
                     bossAttack = Random.Range(1, 5);
+                }
+            }
+
+            if (hp < 1000)
+            {
+                area = 10;
+                minSpeed = -0.15f;
+                maxSpeed = 0.15f;
+                if (attackCount > 300 && attackCount < 400)
+                {
+                    transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
+                }
+
+                if (attackCount == 400.0f)
+                {
+                    //bossAttack = 5;
+                    //度の攻撃かをランダムで選ぶ
+                    transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
+                    bossAttack = Random.Range(1, 6);
                 }
             }
 
@@ -330,8 +424,9 @@ public class Boss : MonoBehaviour
             for (int i = 0; i < 3; i++)
             {
                 //９つのポイントのどこかに生成する
-                downAttack = Random.Range(0, 8);               
+                downAttack = Random.Range(1, 8);               
                 nowAttack[downAttackCount] = Instantiate(insDown, attackPoints[downAttack].transform.position, Quaternion.identity);
+                nowAttackY[downAttackCount] = Instantiate(insDownY, attackPoints[downAttack].transform.position, Quaternion.identity);
                 downAttackCount++;               
             }
         }
@@ -339,11 +434,17 @@ public class Boss : MonoBehaviour
         //生成が終わったら落とす
         if(nowAttack[0] != null && nowAttack[1] != null && nowAttack[2] != null)
         {
-            nowAttack[0].transform.position += new Vector3(0, -0.8f, 0);
-            nowAttack[1].transform.position += new Vector3(0, -0.8f, 0);
-            nowAttack[2].transform.position += new Vector3(0, -0.8f, 0);
-        }
+            nowAttackY[0].transform.localScale += new Vector3(0, 4.0f, 0);
+            nowAttackY[1].transform.localScale += new Vector3(0, 4.0f, 0);
+            nowAttackY[2].transform.localScale += new Vector3(0, 4.0f, 0);
 
+            if(nowAttackY[0].transform.localScale.y > 150)
+            {
+                nowAttack[0].transform.position += new Vector3(0, -0.9f, 0);
+                nowAttack[1].transform.position += new Vector3(0, -0.9f, 0);
+                nowAttack[2].transform.position += new Vector3(0, -0.9f, 0);
+            }           
+        }
 
         //一定の地点まで落ちたら落石を消去、そして値をリセット
         if (nowAttack[0].transform.position.y < -100 && 
@@ -353,6 +454,9 @@ public class Boss : MonoBehaviour
             Destroy(nowAttack[0]);
             Destroy(nowAttack[1]);
             Destroy(nowAttack[2]);
+            Destroy(nowAttackY[0]);
+            Destroy(nowAttackY[1]);
+            Destroy(nowAttackY[2]);
             bossAttack = 0;
             attackCount = 0;
             downAttackCount = 0;
@@ -367,11 +471,11 @@ public class Boss : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 // rangeAとrangeBのx座標の範囲内でランダムな数値を作成
-                float x = Random.Range(-20, 20);
+                float x = Random.Range(-15, 15);
                 // rangeAとrangeBのy座標の範囲内でランダムな数値を作成
-                float y = Random.Range(-8, 8);
+                float y = Random.Range(-7, 7);
                 // rangeAとrangeBのz座標の範囲内でランダムな数値を作成
-                float z = Random.Range(-20, 20);
+                float z = Random.Range(-15, 15);
 
                 if (nowDefence[defenceCount] == null)
                 {
@@ -383,7 +487,7 @@ public class Boss : MonoBehaviour
 
         if (defenceCount == 4)
         {
-            defence = 20;
+            defence = 4;
             bossAttack = 0;
             attackCount = 0;
             defenceCount = 0;
