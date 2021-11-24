@@ -153,7 +153,7 @@ public class Boss : MonoBehaviour
 
                 if (attackCount == 600.0f)
                 {
-                    bossAttack = 2;
+                    bossAttack = 1;
                     //度の攻撃かをランダムで選ぶ
                     transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
                     //bossAttack = Random.Range(1, 5);
