@@ -4178,6 +4178,7 @@ GameObject:
   - component: {fileID: 556355983}
   - component: {fileID: 556355982}
   - component: {fileID: 556355981}
+  - component: {fileID: 556355989}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4319,6 +4320,18 @@ Transform:
   m_Father: {fileID: 851149952}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &556355989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556355980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9b4fb6a848143348abbd3451bc57319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &558364047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5749,6 +5762,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3522001501568388011, guid: 5305cd1821bcafc4a8b378c14c6951bb,
     type: 3}
   m_PrefabInstance: {fileID: 682917064}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &683553394 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 917b7ac7e381fb8458deaedd0fe42e62,
+    type: 3}
+  m_PrefabInstance: {fileID: 664698707}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &693229074
 GameObject:
@@ -7624,6 +7643,9 @@ MonoBehaviour:
   HP_Object: {fileID: 717497165}
   A_Object: {fileID: 654747281}
   tackle: {fileID: 8300000, guid: d894b2dd04fd37b4abc283a11d1749d5, type: 3}
+  ChildrenOrca: {fileID: 683553394}
+  damageParticle: {fileID: 512872480696412514, guid: 40027e1611f65274a83adbd71c650c86,
+    type: 3}
 --- !u!135 &851149949
 SphereCollider:
   m_ObjectHideFlags: 0

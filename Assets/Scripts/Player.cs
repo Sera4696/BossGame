@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
@@ -55,6 +56,14 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip tackle;
     private AudioSource audioSource;
 
+    //子供関係
+    [SerializeField] private GameObject ChildrenOrca;
+
+    //ダメージ関係
+    private float slowTime = 0;
+    private TimeManager timeManager;
+    [SerializeField] private GameObject damageParticle;
+
     //[SerializeField] private GameObject[] points;
 
     // Start is called before the first frame update
@@ -93,6 +102,9 @@ public class Player : MonoBehaviour
 
         //音関連
         audioSource = GetComponent<AudioSource>();
+
+        //ダメージ関連
+        timeManager = mainCamera.GetComponent<TimeManager>();
     }
 
     // Update is called once per frame
@@ -179,14 +191,20 @@ public class Player : MonoBehaviour
             audioSource.PlayOneShot(tackle);
             audioSource.pitch += 0.5f;
 
-            
+            var sequence = DOTween.Sequence();
+            sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(2.5f, 2.5f, 1f), 0.3f)).SetEase(Ease.OutQuart);
+            sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(1.5f, 1.5f, 2f), 0.3f)).SetEase(Ease.OutQuart);
+            sequence.Play();
+
         }
 
         if (isDash == true)
         {
             isBoostDash = false;
             isMove = false;
+
             
+
             //ダッシュスピードカウントを決まった値分増加させる
             dashSpeedCount += dashSpeed / 10;
             transform.position = Vector3.Lerp(transform.position, dashNowPosition, dashSpeedCount);
@@ -210,6 +228,11 @@ public class Player : MonoBehaviour
                     dashSpeed = 0.001f;
                 }
                 //transform.localScale *= 2;
+
+                var sequence = DOTween.Sequence();
+                sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(2f, 2f, 2f), 0.3f)).SetEase(Ease.OutQuart);
+                sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.3f)).SetEase(Ease.OutQuart);
+                sequence.Play();
 
                 isDash = false;
                 isMove = true;
@@ -238,6 +261,7 @@ public class Player : MonoBehaviour
             isDash = false;
             mainCamera.SetActive(false);
             subCamera.SetActive(true);
+            
             boostdashSpeed += 0.001f;　　　//どのぐらいの速度で加速するのか
             transform.position = Vector3.Lerp(transform.position, points[pointCount - 1].transform.position, boostdashSpeed);
             //if (boostdashSpeed >= 0.1f)
@@ -255,14 +279,26 @@ public class Player : MonoBehaviour
             //目標ポイントまで移動出来たかつ配列が終点でないなら
             if (transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
             {
+                var sequence = DOTween.Sequence();
+                sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(2f, 2f, 2f), 0.3f)).SetEase(Ease.OutQuart);
+                sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.3f)).SetEase(Ease.OutQuart);
+                sequence.Play();
+
                 Destroy(points[pointCount - 1]);
                 pointCount--;
                 attack += 10;
+
             }
 
             //目標ポイントが終点まで行きついたなら
             if (transform.position == points[0].transform.position && points[pointCount] == points[0])
             {
+                var sequence = DOTween.Sequence();
+                //sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 0.3f)).SetEase(Ease.OutQuart);
+                sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(2f, 2f, 2f), 0.3f)).SetEase(Ease.OutQuart);
+                sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.3f)).SetEase(Ease.OutQuart);
+                sequence.Play();
+                
                 pointCount = 0;
                 dashSpeed = 0.02f;
                 boostdashSpeed = 0;
@@ -277,6 +313,7 @@ public class Player : MonoBehaviour
         {
             mainCamera.SetActive(true);
             subCamera.SetActive(false);
+            
             trailTime += Time.deltaTime;
             if (trailTime >= 2f)
             {
@@ -506,6 +543,13 @@ public class Player : MonoBehaviour
 
     }
 
+    void DamageEfect()
+    {
+        //bool isSlow = true;
+        ChildrenOrca.transform.DOShakeScale(2f, 0.5f);
+        Instantiate(damageParticle, transform.position, Quaternion.identity);
+    }
+
     void Texts()
     {
         Text HP_Text = HP_Object.GetComponent<Text>();
@@ -522,6 +566,10 @@ public class Player : MonoBehaviour
             if (!isBoostDash)
             {
                 hp -= 10;
+                //DamageEfect();
+                timeManager.SlowDown();
+                //Destroy(other.gameObject);
+                DamageEfect();
             }            
         }
 
