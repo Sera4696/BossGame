@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
     private float slowTime = 0;
     private TimeManager timeManager;
     [SerializeField] private GameObject damageParticle;
+    [SerializeField] private GameObject blackMsk;
 
     //[SerializeField] private GameObject[] points;
 
@@ -105,6 +106,7 @@ public class Player : MonoBehaviour
 
         //ダメージ関連
         timeManager = mainCamera.GetComponent<TimeManager>();
+        blackMsk.GetComponent<SpriteRenderer>().color = new Color32(245, 59 , 59, 0);
     }
 
     // Update is called once per frame
@@ -546,8 +548,17 @@ public class Player : MonoBehaviour
     void DamageEfect()
     {
         //bool isSlow = true;
+        var sequence = DOTween.Sequence();
+        sequence.Append(blackMsk.GetComponent<SpriteRenderer>().DOFade(1, 0.05f).OnComplete(() =>
+        {
+
+            blackMsk.GetComponent<SpriteRenderer>().DOFade(0, 0.3f);
+        }));
+
+        sequence.Play();
         ChildrenOrca.transform.DOShakeScale(2f, 0.5f);
         Instantiate(damageParticle, transform.position, Quaternion.identity);
+        
     }
 
     void Texts()

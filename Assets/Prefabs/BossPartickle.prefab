@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4440844091387150915}
   - component: {fileID: 866530111864355336}
   m_Layer: 9
-  m_Name: DamageParticle
+  m_Name: BossPartickle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4767,7 +4767,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 253e4532a5e5da04d911872fa9a76c6f, type: 2}
+  - {fileID: 2100000, guid: 79975221719225b45bff958924b76194, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

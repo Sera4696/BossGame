@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class TimeManager : MonoBehaviour
 {
@@ -15,6 +16,16 @@ public class TimeManager : MonoBehaviour
     //　時間を遅くしているかどうか
     private bool isSlowDown = false;
 
+    
+
+
+    private void Start()
+    {
+        
+        
+    }
+
+
     void Update()
     {
         //　スローダウンフラグがtrueの時は時間計測
@@ -26,16 +37,17 @@ public class TimeManager : MonoBehaviour
                 SetNormalTime();
             }
         }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SlowDown();
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    SlowDown();
+        //}
     }
     //　時間を遅らせる処理
     public void SlowDown()
     {
         elapsedTime = 0f;
         Time.timeScale = timeScale;
+        
         isSlowDown = true;
     }
     //　時間を元に戻す処理
@@ -43,6 +55,7 @@ public class TimeManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         elapsedTime = 0f;
+        
         isSlowDown = false;
     }
 }
