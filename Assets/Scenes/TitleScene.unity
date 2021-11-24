@@ -3003,7 +3003,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0
@@ -5710,6 +5710,7 @@ GameObject:
   - component: {fileID: 1872572113}
   - component: {fileID: 1872572112}
   - component: {fileID: 1872572115}
+  - component: {fileID: 1872572116}
   m_Layer: 0
   m_Name: BGMObj
   m_TagString: Untagged
@@ -5864,6 +5865,14 @@ AudioLowPassFilter:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!81 &1872572116
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872572111}
+  m_Enabled: 1
 --- !u!4 &1901840098 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3522001501568388011, guid: 5305cd1821bcafc4a8b378c14c6951bb,

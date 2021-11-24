@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShellMat
+  m_Name: SangoPink
   m_Shader: {fileID: 4800000, guid: 2b4b5c07d602a824786c997e4a36e4e4, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,11 +20,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
-    - _ambient: 0
+    - _ambient: 0.13
     - _blue: 1
     - _green: 1
     - _light: 0
     - _red: 1
-    - _specular: 808
+    - _specular: 200
     m_Colors:
-    - _Color: {r: 0.8235294, g: 0.9982898, b: 1, a: 1}
+    - _Color: {r: 1, g: 0.5330188, b: 0.6953032, a: 1}
