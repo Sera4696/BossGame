@@ -7,9 +7,15 @@ public class Gamemanager : MonoBehaviour
     //GameManagerはメインカメラにアタッチするスクリプトです
     [SerializeField] private CameraShake CameraShake;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        Application.targetFrameRate = 60; //FPSを60に設定 
+    }
+
     void Start()
     {
         CameraShake = GetComponent<CameraShake>();
+
     }
 
     // Update is called once per frame
