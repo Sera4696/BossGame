@@ -155,7 +155,7 @@ public class TitleCamera : MonoBehaviour
                 {
                     audioSource.PlayOneShot(kettei);
                     UnityEngine.Application.Quit();
-                    UnityEditor.EditorApplication.isPlaying = false;
+                    //UnityEditor.EditorApplication.isPlaying = false;
                 }
             }
         }
