@@ -39,6 +39,7 @@ public class Boss : MonoBehaviour
     [SerializeField] float aroundTime;
     [SerializeField] float aroundTime2;
     [SerializeField] private float RoopTimer;
+    [SerializeField] private float startTimer;
 
     [SerializeField] public GameObject targetObject;
 
@@ -55,11 +56,14 @@ public class Boss : MonoBehaviour
         downAttackCount = 0;
 
         radius = 35;
+
+        startTimer = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        startTimer++;
         BossAttack();
         Look();
         Texts();
@@ -73,45 +77,56 @@ public class Boss : MonoBehaviour
     void BossAttack()
     {
         
-        attackCount++;
-        //攻撃が始まるまでのカウント
-        if (attackCount > 500 && attackCount < 600)
+        if (startTimer >  300)
         {
-            transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);
+            attackCount++;
+            //攻撃が始まるまでのカウント
+            if (attackCount > 500 && attackCount < 600)
+            {
+                transform.localScale = new Vector3(1.5f, 0.8f, 1.5f);
+            }
+
+            if (attackCount == 600.0f)
+            {
+                //bossAttack = 5;
+                //度の攻撃かをランダムで選ぶ
+                transform.localScale = new Vector3(2.0f, 1.0f, 2.0f);
+
+                if(hp < 4000)
+                {
+
+                }
+
+                bossAttack = Random.Range(1, 5);
+            }
+
+            if (bossAttack == 1)
+            {
+                Shot();
+            }
+
+            if (bossAttack == 2)
+            {
+                DefenceIns();
+            }
+
+            if (bossAttack == 3)
+            {               
+                DownAttack();
+            }
+
+            if (bossAttack == 4)
+            {
+                Roop();
+            }
+
+            if (bossAttack == 5)
+            {                
+                AroundShot();
+            }
         }
 
-        if (attackCount == 600.0f)
-        {
-            //bossAttack = 5;
-            //度の攻撃かをランダムで選ぶ
-            transform.localScale = new Vector3(3.5f, 1.5f, 3.5f);
-            bossAttack = Random.Range(1, 5);
-        }
-
-        if (bossAttack == 1)
-        {
-            Shot();
-        }
-
-        if (bossAttack == 2)
-        {
-            DownAttack();
-        }
-
-        if (bossAttack == 3)
-        {
-            DefenceIns();
-        }
-
-        if (bossAttack == 4)
-        {
-            AroundShot();
-        }
-
-        if (bossAttack == 5)
-        {
-            Roop();
-        }
+        
     }
 
     void Shot()

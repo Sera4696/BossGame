@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     [SerializeField] private TrailRenderer trailRenderer;//ダッシュの軌跡
     private float trailTime=0;
     [SerializeField] private int reverse;              //値の反転
+    [SerializeField] private float startTimer;
     //[SerializeField] public GameObject boss;
     //[SerializeField] public Boss bossScr;
 
@@ -79,6 +80,7 @@ public class Player : MonoBehaviour
         //その他
         reverse = -1;
         trailRenderer.enabled = false;//ダッシュの軌跡
+        startTimer = 0;
         //bossScr = boss.GetComponent<Boss>();
 
         pointCount = 0;
@@ -96,12 +98,16 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        startTimer++;
         //Ins();
         Look();
-        Move();
-        Dash();
-        BoostDash();
-        Line();
+        if (startTimer > 300)
+        {
+            Move();
+            Dash();
+            BoostDash();
+            Line();
+        }      
         Texts();
     }
 
@@ -173,11 +179,7 @@ public class Player : MonoBehaviour
             audioSource.PlayOneShot(tackle);
             audioSource.pitch += 0.5f;
 
-            float distance = Vector3.Distance(transform.position, dashNowPosition);
-            if (distance < 1f)
-            {
-                transform.position = dashNowPosition;
-            }
+            
         }
 
         if (isDash == true)
@@ -190,7 +192,7 @@ public class Player : MonoBehaviour
 
             float distance = Vector3.Distance(transform.position, dashNowPosition);
 
-            if (distance < 1f)
+            if (distance < 0.5f)
             {
                 transform.position = dashNowPosition;
             }
@@ -254,6 +256,7 @@ public class Player : MonoBehaviour
             {
                 Destroy(points[pointCount - 1]);
                 pointCount--;
+                attack += 10;
             }
 
             //目標ポイントが終点まで行きついたなら
@@ -262,6 +265,7 @@ public class Player : MonoBehaviour
                 pointCount = 0;
                 dashSpeed = 0.02f;
                 boostdashSpeed = 0;
+                attack = 30;
                 isBoostDash = false;
                 Destroy(points[0]);
                 isMove = true;
@@ -514,7 +518,10 @@ public class Player : MonoBehaviour
     {
         if(other.gameObject.tag == "Shot")
         {
-            hp -= 10; 
+            if (!isBoostDash)
+            {
+                hp -= 10;
+            }            
         }
 
         if (other.gameObject.tag == "Boss")
