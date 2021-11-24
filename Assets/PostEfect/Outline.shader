@@ -4,7 +4,7 @@
 	{
 		_MainTex("Texture", 2D) = "white" {}
 		_LineColor("Line Color", Color) = (1, 1, 1, 1)
-		_LineWidth("Line Width", Range(0.001, 0.2)) = 0.01
+		_LineWidth("Line Width", Range(0.001, 1)) = 0.01
 	}
 		SubShader
 		{

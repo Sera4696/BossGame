@@ -26,9 +26,14 @@ public class TitleCamera : MonoBehaviour
     [SerializeField] private GameObject PushAText;
     [SerializeField] private GameObject GameStartText;
     [SerializeField] private GameObject EndText;
-    
+    [SerializeField] private GameObject TitleTextObj;
+
+    [SerializeField] private GameObject Ring_Up;
+    [SerializeField] private GameObject Ring_Down;
+
     private void Start()
     {
+        TitleTextObj.SetActive(false);
     }
 
 
@@ -48,9 +53,12 @@ public class TitleCamera : MonoBehaviour
         {
             PushAText.SetActive(false);
             
-            
-            transform.DOMove(new Vector3(-3, 18, 40), 1).SetEase(Ease.OutBack);
+            transform.DOMove(new Vector3(-3, 25, 50), 1).SetEase(Ease.OutBack);
             transform.DORotate(new Vector3(27.5f, 180, 0), 0.5f);
+
+            TitleTextObj.SetActive(true);
+            Ring_Up.SetActive(false);
+            //Ring_Down.SetActive(false);
 
             isTextMove = true;
         }
@@ -116,7 +124,8 @@ public class TitleCamera : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown("joystick button 0"))
                 {
-
+                    UnityEngine.Application.Quit();
+                    UnityEditor.EditorApplication.isPlaying = false;
                 }
             }
         }

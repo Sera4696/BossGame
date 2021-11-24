@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: OutLine
-  m_Shader: {fileID: 4800000, guid: fd8f39b3df1485e4f961a923fbd97761, type: 3}
+  m_Name: OutLine3
+  m_Shader: {fileID: 4800000, guid: 7f9407fac7dbe004ca2b2d826b6652bb, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -40,9 +40,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
-        m_Scale: {x: 10, y: 10}
-        m_Offset: {x: 10, y: 10}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -58,14 +58,27 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _Depth1: 0.6
+    - _Depth1_1: 0.6
+    - _Depth2: 0.5
+    - _Depth2_1: 0.5
+    - _Depth2_2: 0.5
+    - _Depth3: 0.5
+    - _Depth3_1: 0.5
+    - _Depth3_2: 0.4
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.634
+    - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LineWidth: 0.5
     - _Metallic: 0
     - _Mode: 0
+    - _Normal1: 0.8
+    - _Normal1_1: 0.7
+    - _Normal2: 0.5
+    - _Normal2_1: 0.1
+    - _Normal2_2: 0.1
+    - _NormalCutOff: 0.04
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
@@ -74,6 +87,6 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.5229619, g: 0.5552233, b: 0.9811321, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _LineColor: {r: 0.9529412, g: 0.35560408, b: 0.2470588, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
