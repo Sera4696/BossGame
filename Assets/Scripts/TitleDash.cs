@@ -46,6 +46,7 @@ public class TitleDash : MonoBehaviour
 
     //音関係
     [SerializeField] private AudioClip kettei;
+    [SerializeField] private AudioClip tackle;
     private AudioSource audioSource;
 
     //[SerializeField] private GameObject[] points;
@@ -105,6 +106,7 @@ public class TitleDash : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown("joystick button 0")) && !isBoostDash && !isDash && points[0] != null)
         {
             audioSource.PlayOneShot(kettei);
+            audioSource.PlayOneShot(tackle);
             isBoostDash = true;
             isMove = false;
         }
@@ -176,6 +178,7 @@ public class TitleDash : MonoBehaviour
             //目標ポイントまで移動出来たかつ配列が終点でないなら
             if (transform.position == points[pointCount - 1].transform.position && pointCount != 0)
             {
+                audioSource.PlayOneShot(tackle);
                 Destroy(points[pointCount - 1]);
                 pointCount--;
             }

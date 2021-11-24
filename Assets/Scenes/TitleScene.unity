@@ -13480,6 +13480,7 @@ MonoBehaviour:
   reverse: 0
   titleCameraObj: {fileID: 963194225}
   kettei: {fileID: 8300000, guid: 497d82d31216a1f40b84d2b21859b756, type: 3}
+  tackle: {fileID: 8300000, guid: d894b2dd04fd37b4abc283a11d1749d5, type: 3}
 --- !u!1001 &1678965604
 PrefabInstance:
   m_ObjectHideFlags: 0

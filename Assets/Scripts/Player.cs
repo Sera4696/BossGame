@@ -289,6 +289,7 @@ public class Player : MonoBehaviour
             isDash = false;
             trailRenderer.enabled = true;
             audioSource.pitch = 1;
+            audioSource.PlayOneShot(tackle);
         }
 
         
@@ -316,6 +317,7 @@ public class Player : MonoBehaviour
             //目標ポイントまで移動出来たかつ配列が終点でないなら
             if (transform.transform.position == points[pointCount - 1].transform.position && pointCount != 0)
             {
+                audioSource.PlayOneShot(tackle);
                 var sequence = DOTween.Sequence();
                 sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(2f, 2f, 2f), 0.3f)).SetEase(Ease.OutQuart);
                 sequence.Append(ChildrenOrca.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.3f)).SetEase(Ease.OutQuart);
