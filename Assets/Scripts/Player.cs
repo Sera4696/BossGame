@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hp = 50;
+        hp = 100;
         attack = 30;
 
                           
@@ -115,21 +115,21 @@ public class Player : MonoBehaviour
             //周期の値の増減
             if (hori < 0)
             {
-                aroundTime += 0.01f;
+                aroundTime += 0.005f;
             }
             if (hori > 0)
             {
-                aroundTime += -0.01f;
+                aroundTime += -0.005f;
             }
 
             if (Input.GetKey(KeyCode.A))
             {
-                aroundTime += 0.01f;
+                aroundTime += 0.005f;
             }
 
             else if (Input.GetKey(KeyCode.D))
             {
-                aroundTime += -0.01f;
+                aroundTime += -0.005f;
             }
 
             //補正の式

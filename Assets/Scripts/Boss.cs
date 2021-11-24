@@ -48,7 +48,7 @@ public class Boss : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hp = 500;
+        hp = 5000;
 
         bossAttack = 0;
         attackCount = 0;
@@ -75,16 +75,16 @@ public class Boss : MonoBehaviour
         
         attackCount++;
         //攻撃が始まるまでのカウント
-        if (attackCount > 400 && attackCount < 500)
+        if (attackCount > 500 && attackCount < 600)
         {
-            transform.localScale = new Vector3(10, 4, 10);
+            transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);
         }
 
-        if (attackCount == 500.0f)
+        if (attackCount == 600.0f)
         {
             //bossAttack = 5;
             //度の攻撃かをランダムで選ぶ
-            transform.localScale = new Vector3(14, 6, 14);
+            transform.localScale = new Vector3(3.5f, 1.5f, 3.5f);
             bossAttack = Random.Range(1, 5);
         }
 
@@ -160,28 +160,28 @@ public class Boss : MonoBehaviour
 
         if (shotObjects[0] != null)
         {
-            shotObjects[0].transform.position += transform.forward * 0.5f;
+            shotObjects[0].transform.position += transform.forward * 0.3f;
             shotTimer++;
         }
 
         if (shotObjects[1] != null)
         {
-            shotObjects[1].transform.position += transform.forward * 0.5f;
+            shotObjects[1].transform.position += transform.forward * 0.3f;
         }
 
         if (shotObjects[2] != null)
         {
-            shotObjects[2].transform.position += transform.forward * 0.5f;
+            shotObjects[2].transform.position += transform.forward * 0.3f;
         }
 
         if (shotObjects[3] != null)
         {
-            shotObjects[3].transform.position += transform.forward * 0.5f;
+            shotObjects[3].transform.position += transform.forward * 0.3f;
         }
 
         if (shotObjects[4] != null)
         {
-            shotObjects[4].transform.position += transform.forward * 0.5f;
+            shotObjects[4].transform.position += transform.forward * 0.3f;
         }
 
         if (shotTimer > 500)
@@ -221,27 +221,27 @@ public class Boss : MonoBehaviour
 
         if (shotObjects[0] != null)
         {
-            shotObjects[0].transform.position += shotObjects[0].transform.forward * 0.5f;           
+            shotObjects[0].transform.position += shotObjects[0].transform.forward * 0.3f;           
         }
 
         if (shotObjects[1] != null)
         {
-            shotObjects[1].transform.position += shotObjects[1].transform.forward * 0.5f;
+            shotObjects[1].transform.position += shotObjects[1].transform.forward * 0.3f;
         }
 
         if (shotObjects[2] != null)
         {
-            shotObjects[2].transform.position += shotObjects[2].transform.forward * 0.5f;
+            shotObjects[2].transform.position += shotObjects[2].transform.forward * 0.3f;
         }
 
         if (shotObjects[3] != null)
         {
-            shotObjects[3].transform.position += shotObjects[3].transform.forward * 0.5f;
+            shotObjects[3].transform.position += shotObjects[3].transform.forward * 0.3f;
         }
 
         if (shotObjects[4] != null)
         {
-            shotObjects[4].transform.position += shotObjects[4].transform.forward * 0.5f;
+            shotObjects[4].transform.position += shotObjects[4].transform.forward * 0.3f;
         }
 
         if (shotTimer > 500)
@@ -359,13 +359,13 @@ public class Boss : MonoBehaviour
 
         if(nowRoop[0] != null)
         {
-            aroundTime += 0.002f;
+            aroundTime += 0.003f;
             nowRoop[0].transform.position = NR1;
         }
 
         if (nowRoop[1] != null)
         {
-            aroundTime2 += 0.002f;
+            aroundTime2 += 0.003f;
             nowRoop[1].transform.position = NR2;
         }
 
