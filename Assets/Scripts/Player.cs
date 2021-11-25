@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         hp = 100;
-        attack = 35;
+        attack = 40;
       
         PlayerSlider.value = 1;
         playerMaxHP = hp;
@@ -106,7 +106,7 @@ public class Player : MonoBehaviour
         //プレイヤーのダッシュ
         isMove = true;
         isDash = false;
-        dashSpeed = 0.02f;
+        dashSpeed = 0.04f;
 
         isBoostDash = false;
 
@@ -163,6 +163,11 @@ public class Player : MonoBehaviour
             isDash = false;
             trailRenderer.enabled = true;
             audioSource.pitch = 1;
+        }
+
+        if (hp <= 0)
+        {
+            hp = 0;
         }
     }
 
@@ -363,7 +368,7 @@ public class Player : MonoBehaviour
                 sequence.Play();
                 
                 pointCount = 0;
-                dashSpeed = 0.02f;
+                dashSpeed = 0.04f;
                 boostdashSpeed = 0;
                 attack = 30;
                 isBoostDash = false;

@@ -113,6 +113,15 @@ public class Boss : MonoBehaviour
         {
             hp -= 100;
         }
+
+    }
+
+    void Update()
+    {
+        if (hp <= 0)
+        {
+            hp = 0;
+        }
     }
 
     private void Move()
