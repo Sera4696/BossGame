@@ -109,10 +109,7 @@ public class Boss : MonoBehaviour
         Look();
         Texts();
         BossSlider.value = (float)hp / (float)bossMaxHP;
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            hp -= 100;
-        }
+        
 
     }
 
@@ -121,6 +118,10 @@ public class Boss : MonoBehaviour
         if (hp <= 0)
         {
             hp = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            hp -= 100;
         }
     }
 

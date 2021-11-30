@@ -669,7 +669,7 @@ public class Player : MonoBehaviour
                 DamageEfect();
                 //mainCamera.GetComponent<Gamemanager>().CameraShakes();
                 isBGM = true;
-                timeManager.SlowDown();
+                //timeManager.SlowDown();
                 //Destroy(other.gameObject);
             }            
         }
